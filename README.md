@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Desafio ninja](#desafio-ninja)
+  - [Escopo inicial](#escopo-inicial)
+  - [Notas do escopo inicial](#notas-do-escopo-inicial)
+  - [Pré-requisitos](#pr%C3%A9-requisitos)
+    - [Docker e Docker-compose](#docker-e-docker-compose)
+  - [Iniciando a aplicação](#iniciando-a-aplica%C3%A7%C3%A3o)
+  - [Referências](#refer%C3%AAncias)
+  - [Toubleshootings](#toubleshootings)
+    - [Permissão negada para determinadas ações dentro do diretório da aplicação](#permiss%C3%A3o-negada-para-determinadas-a%C3%A7%C3%B5es-dentro-do-diret%C3%B3rio-da-aplica%C3%A7%C3%A3o)
+    - [Arquivos rastreados pelo git após alterar permissões de acesso para o usuário atual](#arquivos-rastreados-pelo-git-ap%C3%B3s-alterar-permiss%C3%B5es-de-acesso-para-o-usu%C3%A1rio-atual)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Desafio ninja
 
 ## Escopo inicial
