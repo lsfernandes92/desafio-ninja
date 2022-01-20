@@ -11,6 +11,8 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 # A library for generating fake data such as names, addresses, and phone numbers.
 gem 'faker', '~> 2.19'
+# ActiveModel::Serializer implementation and Rails hooks
+gem 'active_model_serializers'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
