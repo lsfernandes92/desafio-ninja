@@ -13,6 +13,8 @@ gem 'puma', '~> 5.0'
 gem 'faker', '~> 2.19'
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers'
+# RSpec for Rails 5+
+gem 'rspec-rails'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
