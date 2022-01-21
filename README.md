@@ -75,6 +75,8 @@ Em outro terminal ou no mesmo(caso usou a opção `-d`) faça o seguinte para cr
 
   - [Quickstart: Compose and Rails](https://docs.docker.com/compose/rails/)
   - [Como o git gerencia mudanças de permissões em arquivos](https://medium.com/@tahteche/how-git-treats-changes-in-file-permissions-f71874ca239d)
+  - [Ruby gems - onde procuro pelas Gem's pra adicionar no projeto](https://rubygems.org/)
+  - [Curso de API da Udemy usado de referência](https://www.udemy.com/share/101C4OAkcScFlbQ3o=/)
 
 ## Toubleshootings
 
