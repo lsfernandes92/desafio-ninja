@@ -8,6 +8,7 @@
   - [Pré-requisitos](#pr%C3%A9-requisitos)
     - [Docker e Docker-compose](#docker-e-docker-compose)
   - [Iniciando a aplicação](#iniciando-a-aplica%C3%A7%C3%A3o)
+  - [Como rodar os tests](#como-rodar-os-tests)
   - [Referências](#refer%C3%AAncias)
   - [Toubleshootings](#toubleshootings)
     - [Permissão negada para determinadas ações dentro do diretório da aplicação](#permiss%C3%A3o-negada-para-determinadas-a%C3%A7%C3%B5es-dentro-do-diret%C3%B3rio-da-aplica%C3%A7%C3%A3o)
@@ -71,12 +72,66 @@ Em outro terminal ou no mesmo(caso usou a opção `-d`) faça o seguinte para cr
 
 `docker-compose run web rake db:create`
 
+## Como rodar os tests
+
+Para os testes foi utilizado RSpec e para executar os mesmos execute o comando:
+
+`docker-compose run web bin/rspec`
+
+Exemplo de saida
+
+```
+Randomized with seed 5066
+
+Users requests
+  DELETE /users/:user_id
+    should not delete an invalid user
+    deletes the user
+  GET /users
+    returns users info
+  POST /users
+    should create user
+    PATCH/PUT /users/:id
+      with valid params
+        updates the user
+      with invalid params
+        should not update the user
+    with validations
+      name should not be too long
+      email address should be unique
+      name should be present
+      email should not be too long
+      rejects invalid email addresses
+      email should be present
+      email should be saved in lower case
+  GET /users/:id
+    returns only first user
+    returns 404 when user do not exist
+
+User
+  when is being creating
+    succeds with valid attributes
+  with validations
+    validates email length
+    validates email uniqueness
+    validates email format
+    validates name presence
+    validates email presence
+    validates name length
+
+Finished in 0.5564 seconds (files took 1.03 seconds to load)
+22 examples, 0 failures
+
+Randomized with seed 5066
+```
+
 ## Referências
 
   - [Quickstart: Compose and Rails](https://docs.docker.com/compose/rails/)
   - [Como o git gerencia mudanças de permissões em arquivos](https://medium.com/@tahteche/how-git-treats-changes-in-file-permissions-f71874ca239d)
   - [Ruby gems - onde procuro pelas Gem's pra adicionar no projeto](https://rubygems.org/)
   - [Curso de API da Udemy usado de referência](https://www.udemy.com/share/101C4OAkcScFlbQ3o=/)
+  - [HTTP Statuses - uso como referência pra olhar os status codes](https://httpstatuses.com/)
 
 ## Toubleshootings
 
