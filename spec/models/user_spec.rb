@@ -1,12 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject do
-    described_class.new(
-      name: 'Foo name',
-      email: 'foo@gmail.com'
-    )
-  end
+  subject { build(:user) }
 
   context 'when is being creating' do
     it 'succeds with valid attributes' do
