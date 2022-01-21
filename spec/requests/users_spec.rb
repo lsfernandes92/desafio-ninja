@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Users', type: :request do
+RSpec.describe 'Users requests', type: :request do
   before do
     create_list(:user, 2)
   end
