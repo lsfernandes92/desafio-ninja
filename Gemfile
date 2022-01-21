@@ -15,6 +15,8 @@ gem 'faker', '~> 2.19'
 gem 'active_model_serializers'
 # RSpec for Rails 5+
 gem 'rspec-rails'
+# Set of matchers and helpers to allow you test your APIs responses like a pro.
+gem 'rspec-json_expectations'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
