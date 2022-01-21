@@ -39,7 +39,7 @@ Como na descrição do problema é pedido para que a aplicação "suba" usando o
 
 ### Docker e Docker-compose
 
-É possível buildar e rodar o projeto dentro de um container do [Docker](https://www.docker.com/). Com ele é possível que o projeto execute na máquina destino sem a necessidade de nenhuma configuração de ambiente, como por exemplo e mencionado anteriormente, instalar Ruby, Rails e Bundler. Para isso basta ter o próprio [Docker](https://www.docker.com/) e [Docker-compose](https://docs.docker.com/compose/)(ferramenta do Docker para definir e rodar multiplas aplicações) instalada na máquina.
+É possível buildar e rodar o projeto dentro de um container do [Docker](https://www.docker.com/). Com ele é possível que o projeto execute na máquina destino sem a necessidade de nenhuma configuração de ambiente, como por exemplo e mencionado anteriormente, instalar Ruby, Rails e Bundler. Para isso basta ter o próprio [Docker](https://www.docker.com/) e [Docker-compose](https://docs.docker.com/compose/)(ferramenta do Docker para definir e rodar multiplas aplicações) instalados na máquina.
 
 As diretrizes para instalação do Docker são essas: [Get Docker](https://www.docker.com/get-docker).
 
@@ -47,7 +47,7 @@ Obs: o Docker-compose está disponível ao instalar o Docker para os sistemas Wi
 
 ## Iniciando a aplicação
 
-Novamente não cabe a esse README falar sobre a inicialição manualmente do servidor Rails, pois estamos usando o `docker-compose` como forma de "rodar" a aplicação
+Novamente não cabe a esse README falar sobre a inicialização manualmente do servidor Rails, pois estamos usando o `docker-compose` como forma de "rodar" a aplicação
 
 Para isso abra o terminal, clone a aplicação utilizando o [Git](https://git-scm.com/book/pt-br/v1/Primeiros-passos-Instalando-Git) e navegue até pasta:
 
@@ -65,9 +65,9 @@ Inicie o container com:
 
 ou
 
-`$ docker-compose up -d` (para que dar um "detach" no terminal, assim o mesmo não ficará preso com a execução do container do servidor rails).
+`$ docker-compose up -d` (para dar um "detach" no terminal, assim o mesmo não ficará preso com a execução do container do servidor rails).
 
-Em outro terminal ou no mesmo(caso usou a opção `-d`) faça o seguinte para criar o banco:
+Em outro terminal ou no mesmo(caso usou a opção `-d`) faça o seguinte para criar o banco usado pela aplicação:
 
 `docker-compose run web rake db:create`
 
@@ -86,17 +86,17 @@ Utilizando o Ubuntu com o Docker, em algumas ocasiões após tentar rodar alguns
 
 Isso acontece porque quando o Docker executa o comando `rails new` ele roda esse comando como usuário root e consequente ele atribui como dono o mesmo usuário root para as pastas e arquivos criados sob esse comando.
 
-Para que essa mensagem não volte a ocorrer rode o comando dentro da pasta aplicação no terminal.
+Para que essa mensagem não volte a ocorrer rode o seguinte comando dentro da pasta aplicação no terminal.
 
 `$ sudo chown -R $USER:$USER .`
 
-O comando acima irá designar o usuário atual como dono da pasta, dos subdiretórios e dos arquivos.
+O comando acima irá designar o usuário atual como dono da pasta, dos subdiretórios e dos arquivos que contém a pasta da aplicação.
 
 Após isso, precisamos dar as devidas permissões de acesso para o usuário. E fazemos isso com:
 
 `$ sudo chmod -R u+rwx .`
 
-Isso fará com que o usuário atual tenha as permissões de leitura, escrita e execução para todas as pastas, subdiretórios e arquivos. Logo, a mensagem de permissão negada não deverá acontecer novamente :).
+Isso fará com que o usuário atual tenha as permissões de leitura, escrita e execução para todas as pastas, subdiretórios e arquivos contidos na pasta da aplicaçap. Logo, a mensagem de permissão negada não deverá acontecer novamente :).
 
 ### Arquivos rastreados pelo git após alterar permissões de acesso para o usuário atual
 
@@ -104,6 +104,6 @@ Isso acontece porque o git detecta que as permissões dos arquivos foram alterad
 
 [![Screenshot-from-2022-01-20-18-37-23.png](https://i.postimg.cc/9f2BY4hV/Screenshot-from-2022-01-20-18-37-23.png)](https://postimg.cc/QF65XdCn)
 
-Se após realizar as operações do problema acima você se deparar com o diretório inteiro do git em seu "staged area" e não desejar que o git mantenha esse tipo de gerenciamento, basta rodar o comando:
+Se após realizar as operações do problema acima você se deparar com o diretório inteiro da aplicação em seu "staged area" e não desejar que o git mantenha esse tipo de gerenciamento, basta rodar o comando:
 
 `git config --local core.fileMode false`
