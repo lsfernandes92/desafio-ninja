@@ -15,6 +15,8 @@ gem 'faker', '~> 2.19'
 gem 'active_model_serializers'
 # A plugin for versioning Rails based RESTful APIs.
 gem 'versionist'
+# A sample application showing the power of the Apipie gem
+gem 'apipie-rails'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
