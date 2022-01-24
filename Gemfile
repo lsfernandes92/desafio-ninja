@@ -13,10 +13,8 @@ gem 'puma', '~> 5.0'
 gem 'faker', '~> 2.19'
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers'
-# RSpec for Rails 5+
-gem 'rspec-rails'
-# Set of matchers and helpers to allow you test your APIs responses like a pro.
-gem 'rspec-json_expectations'
+# A plugin for versioning Rails based RESTful APIs.
+gem 'versionist'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
@@ -25,6 +23,10 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Factory Bot hearts Rails
   gem 'factory_bot_rails'
+  # RSpec for Rails 5+
+  gem 'rspec-rails'
+  # Set of matchers and helpers to allow you test your APIs responses like a pro.
+  gem 'rspec-json_expectations'
 end
 
 group :development do
