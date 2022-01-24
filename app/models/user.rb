@@ -12,6 +12,8 @@ class User < ApplicationRecord
 
   before_save :downcase_email
 
+  paginates_per 5
+
   private
 
   def downcase_email

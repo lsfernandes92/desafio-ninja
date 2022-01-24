@@ -5,7 +5,9 @@ module V1
     before_action :set_user, only: %i[show update destroy]
 
     def index
-      @users = User.all
+      page_number = params[:page].try(:[], :number)
+      per_page = params[:page].try(:[], :size)
+      @users = User.all.page(page_number).per(per_page)
 
       render json: @users
     end
