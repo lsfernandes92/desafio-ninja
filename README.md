@@ -81,48 +81,40 @@ Para os testes foi utilizado RSpec e para executar os mesmos execute o comando:
 Exemplo de saida
 
 ```
-Randomized with seed 5066
+Randomized with seed 17226
 
 Users requests
-  DELETE /users/:user_id
-    should not delete an invalid user
-    deletes the user
-  GET /users
-    returns users info
-  POST /users
-    should create user
+  when request with invalid headers
+    returns status code 406 if no accept header sent
+  when resquest with valid headers
+    POST /users
+      should create user
+      with validations
+        email should be present
+        email should not be too long
+        email should be saved in lower case
+        email address should be unique
+        name should be present
+        rejects invalid email addresses
+        name should not be too long
+    GET /users
+      returns users info
     PATCH/PUT /users/:id
-      with valid params
-        updates the user
       with invalid params
         should not update the user
-    with validations
-      name should not be too long
-      email address should be unique
-      name should be present
-      email should not be too long
-      rejects invalid email addresses
-      email should be present
-      email should be saved in lower case
-  GET /users/:id
-    returns only first user
-    returns 404 when user do not exist
+      with valid params
+        updates the user
+    DELETE /users/:user_id
+      should not delete an invalid user
+      deletes the user
+    GET /users/:id
+      returns only first user
+      returns 404 when user do not exist
 
-User
-  when is being creating
-    succeds with valid attributes
-  with validations
-    validates email length
-    validates email uniqueness
-    validates email format
-    validates name presence
-    validates email presence
-    validates name length
+Finished in 0.4118 seconds (files took 0.66875 seconds to load)
+16 examples, 0 failures
 
-Finished in 0.5564 seconds (files took 1.03 seconds to load)
-22 examples, 0 failures
-
-Randomized with seed 5066
+Randomized with seed 17226
 ```
 
 ## Referências
