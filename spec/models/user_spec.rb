@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -6,7 +8,7 @@ RSpec.describe User, type: :model do
   context 'when is being creating' do
     it 'succeds with valid attributes' do
       expect(subject).to be_valid
-      expect{ subject.save }.to change{ User.count }.by(1)
+      expect { subject.save }.to change { User.count }.by(1)
     end
   end
 
@@ -21,11 +23,11 @@ RSpec.describe User, type: :model do
     end
 
     it 'validates name length' do
-      subject.name = "a" * 51
+      subject.name = 'a' * 51
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["Name is too long (maximum is 50 characters)"]
+        ['Name is too long (maximum is 50 characters)']
       )
     end
 
@@ -34,16 +36,16 @@ RSpec.describe User, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["Email can't be blank", "Email is invalid"]
+        ["Email can't be blank", 'Email is invalid']
       )
     end
 
     it 'validates email length' do
-      subject.email = "a" * 255 + '@gmail.com'
+      subject.email = "#{'a' * 255}@gmail.com"
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["Email is too long (maximum is 255 characters)"]
+        ['Email is too long (maximum is 255 characters)']
       )
     end
 
@@ -52,7 +54,7 @@ RSpec.describe User, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["Email is invalid"]
+        ['Email is invalid']
       )
     end
 
