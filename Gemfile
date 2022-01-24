@@ -15,12 +15,14 @@ gem 'faker', '~> 2.19'
 gem 'active_model_serializers'
 # A plugin for versioning Rails based RESTful APIs.
 gem 'versionist'
+# A Ruby static code analyzer and formatter, based on the community Ruby style guide.
+gem 'rubocop', require: false
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Factory Bot hearts Rails
   gem 'factory_bot_rails'
   # RSpec for Rails 5+
@@ -36,4 +38,4 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
