@@ -3,7 +3,7 @@
 namespace :dev do
   desc 'Config development environment'
   task setup: :environment do
-    puts '=== Reseting data base with seed than run migrate'
+    puts '=== Reseting data base with seed'
     `bin/rails db:drop db:create db:migrate db:seed`
     puts '=== Data base reset finished!'
   end
