@@ -142,12 +142,12 @@ module V1
     param :name, String, :desc => "The user name", :required => true
     param :email, String, :desc => "The user email", :required => true
     example <<-EOS
-    curl -X PATCH "http://localhost:3000/users/1" \\
+    curl -X PATCH "http://localhost:3000/v1/users/1" \\
       -H "Accept: application/vnd.api+json" \\
       -H "Content-Type: application/vnd.api+json" \\
       -d '{"data":{"id":"1","type":"users","attributes":{"name":"Atlas Ryan","email":"radio@man.com"}}}'
     ou
-    curl -X PUT "http://localhost:3000/users/1" \\
+    curl -X PUT "http://localhost:3000/v1/users/1" \\
       -H "Accept: application/vnd.api+json" \\
       -H "Content-Type: application/vnd.api+json" \\
       -d '{"data":{"id":"1","type":"users","attributes":{"name":"Atlas Ryan","email":"radio@man.com"}}}'
@@ -193,6 +193,7 @@ module V1
       curl -X DELETE "http://localhost:3000/v1/users/1" \\
         -H "Accept: application/vnd.api+json" \\
         -H "Content-Type: application/vnd.api+json" \\
+
         # The above command will returns JSON structured like this:
         nothing
       EOS
