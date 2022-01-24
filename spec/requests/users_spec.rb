@@ -15,7 +15,6 @@ RSpec.describe 'Users requests', type: :request do
 
     let(:accept_header) { {"Accept": "application/vnd.api+json"} }
     let(:content_type_header) { {"Content-Type": "application/vnd.api+json"} }
-    let(:response_body) { JSON.parse(response.body) }
 
     describe 'GET /users' do
       before do
