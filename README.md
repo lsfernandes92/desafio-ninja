@@ -8,6 +8,8 @@
   - [Pré-requisitos](#pr%C3%A9-requisitos)
     - [Docker e Docker-compose](#docker-e-docker-compose)
   - [Iniciando a aplicação](#iniciando-a-aplica%C3%A7%C3%A3o)
+  - [Setup incial - populando o banco de dados](#setup-incial---populando-o-banco-de-dados)
+  - [Como rodar os testes](#como-rodar-os-testes)
   - [Referências](#refer%C3%AAncias)
   - [Toubleshootings](#toubleshootings)
     - [Permissão negada para determinadas ações dentro do diretório da aplicação](#permiss%C3%A3o-negada-para-determinadas-a%C3%A7%C3%B5es-dentro-do-diret%C3%B3rio-da-aplica%C3%A7%C3%A3o)
@@ -69,12 +71,87 @@ ou
 
 Em outro terminal ou no mesmo(caso usou a opção `-d`) faça o seguinte para criar o banco:
 
-`docker-compose run web rake db:create`
+`$ docker-compose run web rake db:create`
+
+## Setup incial - populando o banco de dados
+
+Uma primeira opção seria rodar os comandos de praxe:
+
+`$ docker-compose run web rails db:migrate` para rodar as migrações
+
+e
+
+`$ docker-compose run web rails db:seed` para popular o banco de dados.
+
+Uma outra opção e com intuito de facilitar a navegação pela aplicação pela primeira vez, foi criado uma _task_ para servir de seed data. Para fazer uso da mesma, após estar com a aplicação "rodando" pelo endereço http://localhost:3000 digite o seguinte comando:
+
+`$ docker-compose run web rails dev:setup`
+
+Após isso terá uma saída como a seguinte:
+
+```
+=== Reseting data base with seed than run migrate
+=== Data base reset finished!
+
+```
+
+O que esse comando faz é "dropar" e criar novamente o banco de dados, rodar as migrações e por fim popular o banco com os seeds localizado em `db/seeds.rb`.
+
+O motivo por eu criar essa task e não optar por rodar o `rails db:reset` (que supostamente faria a mesma coisa) expliquei [nesse commit](https://github.com/lsfernandes92/desafio-ninja/commit/7d34bb33cdf70645280c5f28eb100190ddfcff5e).
+
+## Como rodar os testes
+
+Para os testes foi utilizado RSpec e para executar os mesmos execute o comando:
+
+`$ docker-compose run web bin/rspec`
+
+Exemplo de saida:
+
+```
+Randomized with seed 17226
+
+Users requests
+  when request with invalid headers
+    returns status code 406 if no accept header sent
+  when resquest with valid headers
+    POST /users
+      should create user
+      with validations
+        email should be present
+        email should not be too long
+        email should be saved in lower case
+        email address should be unique
+        name should be present
+        rejects invalid email addresses
+        name should not be too long
+    GET /users
+      returns users info
+    PATCH/PUT /users/:id
+      with invalid params
+        should not update the user
+      with valid params
+        updates the user
+    DELETE /users/:user_id
+      should not delete an invalid user
+      deletes the user
+    GET /users/:id
+      returns only first user
+      returns 404 when user do not exist
+
+Finished in 0.4118 seconds (files took 0.66875 seconds to load)
+16 examples, 0 failures
+
+Randomized with seed 17226
+```
 
 ## Referências
 
   - [Quickstart: Compose and Rails](https://docs.docker.com/compose/rails/)
   - [Como o git gerencia mudanças de permissões em arquivos](https://medium.com/@tahteche/how-git-treats-changes-in-file-permissions-f71874ca239d)
+  - [Ruby gems - onde procuro pelas Gem's pra adicionar no projeto](https://rubygems.org/)
+  - [Curso de API da Udemy usado de referência](https://www.udemy.com/share/101C4OAkcScFlbQ3o=/)
+  - [HTTP Statuses - uso como referência pra olhar os status codes](https://httpstatuses.com/)
+  - [Apipie - Api documentation](https://github.com/Apipie/apipie-rails)
 
 ## Toubleshootings
 
@@ -104,4 +181,4 @@ Isso acontece porque o git detecta que as permissões dos arquivos foram alterad
 
 Se após realizar as operações do problema acima você se deparar com o diretório inteiro do git em seu "staged area" e não desejar que o git mantenha esse tipo de gerenciamento, basta rodar o comando:
 
-`git config --local core.fileMode false`
+`$ git config --local core.fileMode false`
