@@ -19,6 +19,8 @@ gem 'versionist'
 gem 'rubocop', require: false
 # A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Ruby webapps
 gem 'kaminari'
+# Link header pagination for Rails and Grape APIs.
+gem 'api-pagination'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
