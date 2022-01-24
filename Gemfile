@@ -17,6 +17,8 @@ gem 'active_model_serializers'
 gem 'versionist'
 # A Ruby static code analyzer and formatter, based on the community Ruby style guide.
 gem 'rubocop', require: false
+# A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Ruby webapps
+gem 'kaminari'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
