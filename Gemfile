@@ -21,6 +21,8 @@ gem 'rubocop', require: false
 gem 'kaminari'
 # Link header pagination for Rails and Grape APIs.
 gem 'api-pagination'
+# Repository for collecting Locale data for Ruby on Rails I18n as well as other interesting, Rails related I18n stuff
+gem 'rails-i18n'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
