@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2022_01_25_124940) do
   create_table "appointments", force: :cascade do |t|
     t.string "title"
     t.text "notes"
-    t.time "start_time"
-    t.time "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
