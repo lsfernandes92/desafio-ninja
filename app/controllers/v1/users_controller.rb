@@ -45,7 +45,10 @@ module V1
     end
 
     def user_params
-      ActiveModelSerializers::Deserialization.jsonapi_parse(params)
+      ActiveModelSerializers::Deserialization.jsonapi_parse(
+        params,
+        only: %i[id name email]
+      )
     end
   end
 end
