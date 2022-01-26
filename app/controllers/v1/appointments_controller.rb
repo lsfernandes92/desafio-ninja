@@ -7,12 +7,13 @@ module V1
     end
 
     def create
-      @user.appointments << Appointment.new(appointment_params)
+      appointment = Appointment.new(appointment_params)
+      @user.appointments << appointment
 
       if @user.save
         render json: @user.appointments, status: :created, location: v1_user_appointments_path(@user)
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: appointment.errors, status: :unprocessable_entity
       end
     end
 
@@ -22,7 +23,7 @@ module V1
       if appointment.update(appointment_params)
         render json: @user.appointments
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: appointment.errors, status: :unprocessable_entity
       end
     end
 
