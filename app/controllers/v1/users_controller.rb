@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module V1
   class UsersController < ApplicationController
-    before_action :set_user, only: [:show, :update, :destroy]
+    before_action :set_user, only: %i[show update destroy]
 
     api :GET, '/users', 'Returns all users'
     error :code => 406,
@@ -39,7 +41,9 @@ module V1
        property :email, String, :desc => "The user email"
     end
     def index
-      @users = User.all
+      page_number = params[:page].try(:[], :number)
+      per_page = params[:page].try(:[], :size)
+      @users = User.all.page(page_number).per(per_page)
 
       render json: @users
     end
@@ -203,12 +207,16 @@ module V1
     end
 
     private
+
     def set_user
       @user = User.find(params[:id])
     end
 
     def user_params
-      ActiveModelSerializers::Deserialization.jsonapi_parse(params)
+      ActiveModelSerializers::Deserialization.jsonapi_parse(
+        params,
+        only: %i[id name email]
+      )
     end
   end
 end

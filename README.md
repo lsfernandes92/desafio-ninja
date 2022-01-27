@@ -8,7 +8,8 @@
   - [Pré-requisitos](#pr%C3%A9-requisitos)
     - [Docker e Docker-compose](#docker-e-docker-compose)
   - [Iniciando a aplicação](#iniciando-a-aplica%C3%A7%C3%A3o)
-  - [Como rodar os tests](#como-rodar-os-tests)
+  - [Setup incial - populando o banco de dados](#setup-incial---populando-o-banco-de-dados)
+  - [Como rodar os testes](#como-rodar-os-testes)
   - [Referências](#refer%C3%AAncias)
   - [Toubleshootings](#toubleshootings)
     - [Permissão negada para determinadas ações dentro do diretório da aplicação](#permiss%C3%A3o-negada-para-determinadas-a%C3%A7%C3%B5es-dentro-do-diret%C3%B3rio-da-aplica%C3%A7%C3%A3o)
@@ -70,15 +71,41 @@ ou
 
 Em outro terminal ou no mesmo(caso usou a opção `-d`) faça o seguinte para criar o banco usado pela aplicação:
 
-`docker-compose run web rake db:create`
+`$ docker-compose run web rake db:create`
 
-## Como rodar os tests
+## Setup incial - populando o banco de dados
+
+Uma primeira opção seria rodar os comandos de praxe:
+
+`$ docker-compose run web rails db:migrate` para rodar as migrações
+
+e
+
+`$ docker-compose run web rails db:seed` para popular o banco de dados.
+
+Uma outra opção e com intuito de facilitar a navegação pela aplicação pela primeira vez, foi criado uma _task_ para servir de seed data. Para fazer uso da mesma, após estar com a aplicação "rodando" pelo endereço http://localhost:3000 digite o seguinte comando:
+
+`$ docker-compose run web rails dev:setup`
+
+Após isso terá uma saída como a seguinte:
+
+```
+=== Reseting data base with seed than run migrate
+=== Data base reset finished!
+
+```
+
+O que esse comando faz é "dropar" e criar novamente o banco de dados, rodar as migrações e por fim popular o banco com os seeds localizado em `db/seeds.rb`.
+
+O motivo por eu criar essa task e não optar por rodar o `rails db:reset` (que supostamente faria a mesma coisa) expliquei [nesse commit](https://github.com/lsfernandes92/desafio-ninja/commit/7d34bb33cdf70645280c5f28eb100190ddfcff5e).
+
+## Como rodar os testes
 
 Para os testes foi utilizado RSpec e para executar os mesmos execute o comando:
 
-`docker-compose run web bin/rspec`
+`$ docker-compose run web bin/rspec`
 
-Exemplo de saida
+Exemplo de saida:
 
 ```
 Randomized with seed 17226
@@ -124,6 +151,15 @@ Randomized with seed 17226
   - [Ruby gems - onde procuro pelas Gem's pra adicionar no projeto](https://rubygems.org/)
   - [Curso de API da Udemy usado de referência](https://www.udemy.com/share/101C4OAkcScFlbQ3o=/)
   - [HTTP Statuses - uso como referência pra olhar os status codes](https://httpstatuses.com/)
+  - [Apipie - Api documentation](https://github.com/Apipie/apipie-rails)
+  - [Rails Guides - Como formartar Date/Time](https://guides.rubyonrails.org/i18n.html#adding-date-time-formats)
+  - [Rubocop comandos básicos](https://docs.rubocop.org/rubocop/1.25/usage/basic_usage.html)
+  - [Como definar um helper method no RSpec](https://relishapp.com/rspec/rspec-core/v/3-8/docs/helper-methods/define-helper-methods-in-a-module)
+  - [Adicionar json-expectations no RSpec](https://relishapp.com/waterlink/rspec-json-expectations/docs/json-expectations/include-json-matcher-with-hash)
+  - [Como o Git lida com as mudanças de permissões de arquivos](https://medium.com/@tahteche/how-git-treats-changes-in-file-permissions-f71874ca239d)
+  - [Como dar ao usuário permissão de acesso à arquivos](https://fedingo.com/how-to-give-user-access-to-folder-in-linux/?utm_source=pocket_mylist)
+  - [Usando símbolo :if Active Record](https://guides.rubyonrails.org/active_record_validations.html#using-a-symbol-with-if-and-unless)
+  - [Helper de validação :comparison Rails 7](https://guides.rubyonrails.org/active_record_validations.html#comparison)
 
 ## Toubleshootings
 
@@ -153,4 +189,4 @@ Isso acontece porque o git detecta que as permissões dos arquivos foram alterad
 
 Se após realizar as operações do problema acima você se deparar com o diretório inteiro da aplicação em seu "staged area" e não desejar que o git mantenha esse tipo de gerenciamento, basta rodar o comando:
 
-`git config --local core.fileMode false`
+`$ git config --local core.fileMode false`
