@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module V1
   class AppointmentSerializer < ActiveModel::Serializer
     attributes :id, :title, :notes, :start_time, :end_time

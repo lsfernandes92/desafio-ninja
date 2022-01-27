@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Appointment, type: :model do
@@ -52,7 +54,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["Start time can't be blank", "Start time must be less than end_time"]
+        ["Start time can't be blank", 'Start time must be less than end_time']
       )
     end
 
@@ -60,10 +62,10 @@ RSpec.describe Appointment, type: :model do
       travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
         subject.start_time = Time.zone.local(2022, 1, 27, 13, 0, 0)
         subject.end_time = Time.zone.local(2022, 1, 27, 12, 0, 0)
-        
+
         expect(subject).not_to be_valid
         expect(subject.errors.full_messages).to match_array(
-          ["End time must be greater than start_time", "Start time must be less than end_time"]
+          ['End time must be greater than start_time', 'Start time must be less than end_time']
         )
       end
     end
@@ -73,7 +75,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["End time can't be blank", "End time must be greater than start_time"]
+        ["End time can't be blank", 'End time must be greater than start_time']
       )
     end
 
@@ -85,7 +87,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["End time must be on week days", "Start time must be on week days"]
+        ['End time must be on week days', 'Start time must be on week days']
       )
     end
 
@@ -96,7 +98,7 @@ RSpec.describe Appointment, type: :model do
 
         expect(subject).not_to be_valid
         expect(subject.errors.full_messages).to match_array(
-          ["Start time must be during business hours"]
+          ['Start time must be during business hours']
         )
       end
     end
@@ -109,7 +111,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["End time must be during business hours"]
+        ['End time must be during business hours']
       )
     end
 
@@ -121,7 +123,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["Appointment must be on same day"]
+        ['Appointment must be on same day']
       )
     end
 
@@ -134,7 +136,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["Appointment already took"]
+        ['Appointment already took']
       )
     end
 
@@ -146,7 +148,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["Appointment must be in future date"]
+        ['Appointment must be in future date']
       )
     end
   end

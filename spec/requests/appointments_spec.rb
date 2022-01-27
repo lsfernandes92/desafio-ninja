@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Appointments requests", type: :request do
+RSpec.describe 'Appointments requests', type: :request do
   let(:accept_header) { { "Accept": 'application/vnd.api+json' } }
   let(:content_type_header) { { "Content-Type": 'application/vnd.api+json' } }
   let(:user_without_appointment) { create(:user) }
@@ -58,12 +60,12 @@ RSpec.describe "Appointments requests", type: :request do
       let(:appointment_params) do
         {
           "data": {
-            "type": "appointments",
+            "type": 'appointments',
             "attributes": {
-                "title": "Foo title",
-                "notes": "Foo note",
-                "start_time": "27/01/2022 12:00",
-                "end_time": "27/01/2022 13:00"
+              "title": 'Foo title',
+              "notes": 'Foo note',
+              "start_time": '27/01/2022 12:00',
+              "end_time": '27/01/2022 13:00'
             }
           }
         }
@@ -300,12 +302,12 @@ RSpec.describe "Appointments requests", type: :request do
         {
           "data": {
             "id": record_to_update.id.to_s,
-            "type": "appointments",
+            "type": 'appointments',
             "attributes": {
-                "title": "Título maneiro",
-                "notes": "Nota secreta",
-                "start_time": "27/01/2022 12:00",
-                "end_time": "27/01/2022 13:00"
+              "title": 'Título maneiro',
+              "notes": 'Nota secreta',
+              "start_time": '27/01/2022 12:00',
+              "end_time": '27/01/2022 13:00'
             }
           },
           "id": record_to_update.id.to_s
@@ -361,7 +363,7 @@ RSpec.describe "Appointments requests", type: :request do
       let(:appointment_params) do
         {
           "data": {
-            "id": "#{appointment_to_destroy.id}"
+            "id": appointment_to_destroy.id.to_s
           }
         }
       end
