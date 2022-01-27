@@ -57,6 +57,7 @@ RSpec.describe 'Appointments requests', type: :request do
     end
 
     describe 'POST /users/:user_id/relationships/appointment' do
+      let(:first_room) { Room.first }
       let(:appointment_params) do
         {
           "data": {
@@ -65,11 +66,14 @@ RSpec.describe 'Appointments requests', type: :request do
               "title": 'Foo title',
               "notes": 'Foo note',
               "start_time": '27/01/2022 12:00',
-              "end_time": '27/01/2022 13:00'
+              "end_time": '27/01/2022 13:00',
+              "room_id": first_room.id.to_s
             }
           }
         }
       end
+
+      before { create(:room) }
 
       it 'should create appointment' do
         travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
@@ -80,23 +84,37 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end.to change { Appointment.count }.by(1)
+          expect(response_body).to include_json(
+            data: [{
+              id: (be_kind_of String),
+              type: 'appointments',
+              attributes: {
+                title: appointment_params.dig(:data, :attributes, :title),
+                notes: appointment_params.dig(:data, :attributes, :notes),
+                'start-time': (be_kind_of String),
+                'end-time': (be_kind_of String)
+              }
+              }]
+            )
+            expect(response).to have_http_status :created
         end
-        expect(response_body).to include_json(
-          data: [{
-            id: (be_kind_of String),
-            type: 'appointments',
-            attributes: {
-              title: appointment_params.dig(:data, :attributes, :title),
-              notes: appointment_params.dig(:data, :attributes, :notes),
-              'start-time': (be_kind_of String),
-              'end-time': (be_kind_of String)
-            }
-          }]
-        )
-        expect(response).to have_http_status :created
       end
 
       context 'with validations' do
+        it 'validates room_id presence' do
+          appointment_params[:data][:attributes][:room_id] = ''
+
+          travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
+            post(
+              v1_user_appointment_path(user_without_appointment),
+              params: appointment_params.to_json,
+              headers: accept_header.merge(content_type_header)
+            )
+          end
+          expect(response_body['room']).to match_array(["must exist"])
+          expect(response).to have_http_status :unprocessable_entity
+        end
+
         it 'validates title presence' do
           appointment_params[:data][:attributes][:title] = ''
 
@@ -339,6 +357,7 @@ RSpec.describe 'Appointments requests', type: :request do
           appointment_params[:data][:attributes][:notes] = ''
           appointment_params[:data][:attributes][:start_time] = ''
           appointment_params[:data][:attributes][:end_time] = ''
+          appointment_params[:data][:attributes][:room_id] = ''
 
           patch(
             v1_user_appointment_path(record_to_update.user),
@@ -353,6 +372,7 @@ RSpec.describe 'Appointments requests', type: :request do
           expect(response_body['notes']).to match_array(["can't be blank"])
           expect(response_body['start_time']).to match_array(["can't be blank"])
           expect(response_body['end_time']).to match_array(["can't be blank"])
+          expect(response_body['room']).to match_array(['must exist'])
           expect(response).to have_http_status :unprocessable_entity
         end
       end
