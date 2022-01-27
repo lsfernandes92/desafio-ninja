@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Appointments requests', type: :request do
-  let(:accept_header) { { "Accept": 'application/vnd.api+json' } }
-  let(:content_type_header) { { "Content-Type": 'application/vnd.api+json' } }
   let(:user_without_appointment) { create(:user) }
   let(:user_with_appointment) { create(:user_with_appointment) }
 

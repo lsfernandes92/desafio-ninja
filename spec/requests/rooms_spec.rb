@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Room requests", type: :request do
-  let(:accept_header) { { "Accept": 'application/vnd.api+json' } }
-  let(:content_type_header) { { "Content-Type": 'application/vnd.api+json' } }
   let(:first_room) { Room.first }
 
   before do

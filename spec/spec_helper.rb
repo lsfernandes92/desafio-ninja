@@ -16,9 +16,11 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'helpers/json_helpers'
+require 'helpers/header_helpers'
 
 RSpec.configure do |config|
   config.include JsonHelpers
+  config.include HeaderHelpers
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

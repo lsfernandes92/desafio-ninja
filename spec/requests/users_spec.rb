@@ -3,9 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Users requests', type: :request do
-  let(:accept_header) { { "Accept": 'application/vnd.api+json' } }
-  let(:content_type_header) { { "Content-Type": 'application/vnd.api+json' } }
-
   before do
     create_list(:user, 2)
   end
