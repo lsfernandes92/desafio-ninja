@@ -3,7 +3,11 @@ module V1
     before_action :set_user
 
     def show
-      render json: @user.appointments
+      page_number = params[:page].try(:[], :number)
+      per_page = params[:page].try(:[], :size)
+      appointments = @user.appointments.all.page(page_number).per(per_page)
+
+      render json: appointments
     end
 
     def create

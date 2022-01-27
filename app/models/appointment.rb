@@ -26,6 +26,8 @@ class Appointment < ApplicationRecord
 
   before_create { set_durations_minute }
 
+  paginates_per 5
+
   private
 
     def duration_time_on_weekday
