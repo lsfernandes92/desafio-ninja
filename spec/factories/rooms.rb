@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :room do
     name { Faker::FunnyName.name }
-    
+
     transient do
       appointments_quantity { 1 }
     end

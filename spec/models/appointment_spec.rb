@@ -18,7 +18,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["Room must exist"]
+        ['Room must exist']
       )
     end
     it 'validates title presence' do
@@ -152,7 +152,7 @@ RSpec.describe Appointment, type: :model do
       travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
         subject.start_time = Time.zone.local(2022, 1, 25, 17, 0, 0)
         subject.end_time = Time.zone.local(2022, 1, 25, 17, 1, 0)
-        
+
         expect(subject).not_to be_valid
         expect(subject.errors.full_messages).to match_array(
           ['Appointment must be in future date']

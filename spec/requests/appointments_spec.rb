@@ -92,9 +92,9 @@ RSpec.describe 'Appointments requests', type: :request do
                 'start-time': (be_kind_of String),
                 'end-time': (be_kind_of String)
               }
-              }]
-            )
-            expect(response).to have_http_status :created
+            }]
+          )
+          expect(response).to have_http_status :created
         end
       end
 
@@ -109,7 +109,7 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['room']).to match_array(["must exist"])
+          expect(response_body['room']).to match_array(['must exist'])
           expect(response).to have_http_status :unprocessable_entity
         end
 

@@ -78,7 +78,7 @@ class Appointment < ApplicationRecord
 
     has_appointments = Appointment.where(
       start_time: start_time.beginning_of_day..start_time.end_of_day
-    ).any? { |a| start_time_took? || end_time_took? }
+    ).any? { |_a| start_time_took? || end_time_took? }
 
     errors.add(:appointment, 'already took') if has_appointments
   end

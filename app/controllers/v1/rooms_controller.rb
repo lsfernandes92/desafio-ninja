@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module V1
   class RoomsController < ApplicationController
-    before_action :set_room, only: %i[ show update destroy ]
+    before_action :set_room, only: %i[show update destroy]
 
     def show
       render json: @room

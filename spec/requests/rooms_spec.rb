@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Room requests", type: :request do
+RSpec.describe 'Room requests', type: :request do
   let(:first_room) { Room.first }
 
   before do
