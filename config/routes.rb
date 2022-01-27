@@ -6,5 +6,9 @@ Rails.application.routes.draw do
       resource :appointments, only: [:show], path: 'relationships/appointments'
       resource :appointment, only: %i[update create destroy], path: 'relationships/appointment'
     end
+
+    resources :rooms do
+      resource :appointments, only: [:show], path: 'relationships/appointments'
+    end
   end
 end
