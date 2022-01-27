@@ -7,13 +7,10 @@ module V1
     api :GET, '/users', 'Returns all users'
     error :code => 406,
       :desc => "Not Acceptable - Due the non accepted 'Accept' header"
-    error :code => 415,
-      :desc => "Unsupported Media Type - Due the non accepted 'Content-type' header"
     formats ['application/vnd.api+json']
     example <<-EOS
       curl "http://localhost:3000/v1/users/" \\
         -H "Accept: application/vnd.api+json" \\
-        -H "Content-type: application/vnd.api+json"
 
       # The above command will returns JSON structured like this:
       {
@@ -53,13 +50,10 @@ module V1
       :desc => "Not Found - Couldn't find User with 'id'=<USER_ID>"
     error :code => 406,
       :desc => "Not Acceptable - Due the non accepted 'Accept' header"
-    error :code => 415,
-      :desc => "Unsupported Media Type - Due the non accepted 'Content-type' header"
     formats ['application/vnd.api+json']
     example <<-EOS
       curl "http://localhost:3000/v1/users/1" \\
-        -H "Accept: application/vnd.api+json" \\
-        -H "Content-type: application/vnd.api+json"
+        -H "Accept: application/vnd.api+json"
 
       # The above command will returns JSON structured like this:
       {
@@ -86,7 +80,7 @@ module V1
       render json: @user
     end
 
-    api :POST, '/users', 'Create a new user'
+    api :POST, '/users', 'Creates a new user'
     error :code => 406,
       :desc => "Not Acceptable - Due the non accepted 'Accept' header"
     error :code => 415,
@@ -113,7 +107,7 @@ module V1
     EOS
     param :name, String, :desc => "The user name", :required => true
     param :email, String, :desc => "The user email", :required => true
-    returns :code => 200, :desc => "a successful response" do
+    returns :code => 201, :desc => "a successful response" do
       property :data, Hash, :desc => "A Hash value"
       property :id, Integer, :desc => "Numeric identifier for an User"
       property :type, String, :desc => "An string value of the record type"
@@ -132,7 +126,7 @@ module V1
     end
 
 
-    api :PATCH, '/users/:user_id', 'Update an user'
+    api :PATCH, '/users/:user_id', 'Updates an user'
     error :code => 404,
       :desc => "Not Found - Couldn't find User with 'id'=<USER_ID>"
     error :code => 406,
@@ -142,9 +136,6 @@ module V1
     error :code => 422,
       :desc => "Unprocessable Entity - The request was well-formed but fail with user validations when tried to create"
     formats ['application/vnd.api+json']
-    param :user_id, Integer, :desc => "Desirable user to update", :required => true
-    param :name, String, :desc => "The user name", :required => true
-    param :email, String, :desc => "The user email", :required => true
     example <<-EOS
     curl -X PATCH "http://localhost:3000/v1/users/1" \\
       -H "Accept: application/vnd.api+json" \\
@@ -168,6 +159,9 @@ module V1
           }
       }
     EOS
+    param :user_id, Integer, :desc => "Desirable user to update", :required => true
+    param :name, String, :desc => "The user name", :required => true
+    param :email, String, :desc => "The user email", :required => true
     returns :code => 200, :desc => "a successful response" do
       property :data, Hash, :desc => "A Hash value"
       property :id, Integer, :desc => "Numeric identifier for an User"
@@ -184,24 +178,24 @@ module V1
       end
     end
 
-      api :DELETE, '/users/:user_id', 'Delete an user'
-      error :code => 404,
-        :desc => "Not Found - Couldn't find User with 'id'=<USER_ID>"
-      error :code => 406,
-        :desc => "Not Acceptable - Due the non accepted 'Accept' header"
-      error :code => 415,
-        :desc => "Unsupported Media Type - Due the non accepted 'Content-type' header"
-      formats ['application/vnd.api+json']
-      param :user_id, Integer, :desc => "Desirable user to delete", :required => true
-      example <<-EOS
-      curl -X DELETE "http://localhost:3000/v1/users/1" \\
-        -H "Accept: application/vnd.api+json" \\
-        -H "Content-Type: application/vnd.api+json" \\
+    api :DELETE, '/users/:user_id', 'Deletes an user'
+    error :code => 404,
+      :desc => "Not Found - Couldn't find User with 'id'=<USER_ID>"
+    error :code => 406,
+      :desc => "Not Acceptable - Due the non accepted 'Accept' header"
+    error :code => 415,
+      :desc => "Unsupported Media Type - Due the non accepted 'Content-type' header"
+    formats ['application/vnd.api+json']
+    param :user_id, Integer, :desc => "Desirable user to delete", :required => true
+    example <<-EOS
+    curl -X DELETE "http://localhost:3000/v1/users/1" \\
+      -H "Accept: application/vnd.api+json" \\
+      -H "Content-Type: application/vnd.api+json" \\
 
-        # The above command will returns JSON structured like this:
-        nothing
-      EOS
-      returns :code => 204, :desc => "no content response"
+      # The above command will returns JSON structured like this:
+      nothing
+    EOS
+    returns :code => 204, :desc => "no content response"
     def destroy
       @user.destroy
     end
