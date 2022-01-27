@@ -84,11 +84,11 @@ class Appointment < ApplicationRecord
   end
 
   def start_time_took?
-    Appointment.where('? BETWEEN start_time AND end_time', start_time).any?
+    Appointment.where('? BETWEEN start_time AND end_time AND room_id = ?', start_time, room_id).any?
   end
 
   def end_time_took?
-    Appointment.where('? BETWEEN start_time AND end_time', end_time).any?
+    Appointment.where('? BETWEEN start_time AND end_time AND room_id = ?', end_time, room_id).any?
   end
 
   def duration_in_future

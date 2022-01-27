@@ -137,9 +137,10 @@ RSpec.describe Appointment, type: :model do
 
     it 'validates if appointment time already took' do
       travel_to Time.zone.local(2022, 1, 26, 8, 0, 0) do
-        create(:appointment)
+        appointment = create(:appointment)
         subject.start_time = Time.zone.local(2022, 12, 26, 9, 0, 0)
         subject.end_time = Time.zone.local(2022, 12, 26, 17, 0, 0)
+        subject.room = appointment.room
 
         expect(subject).not_to be_valid
         expect(subject.errors.full_messages).to match_array(

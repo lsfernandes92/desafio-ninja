@@ -281,8 +281,10 @@ RSpec.describe 'Appointments requests', type: :request do
         end
 
         it 'validates if appointment time already took' do
+          appointment = create(:appointment)
           appointment_params[:data][:attributes][:start_time] = '26/12/2022 12:00'
           appointment_params[:data][:attributes][:end_time] = '26/12/2022 13:00'
+          appointment_params[:data][:attributes][:room_id] = appointment.room.id.to_s
 
           travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
             post(
