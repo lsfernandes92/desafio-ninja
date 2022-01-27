@@ -60,12 +60,12 @@ RSpec.describe Appointment, type: :model do
       travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
         subject.start_time = Time.zone.local(2022, 1, 27, 13, 0, 0)
         subject.end_time = Time.zone.local(2022, 1, 27, 12, 0, 0)
+        
+        expect(subject).not_to be_valid
+        expect(subject.errors.full_messages).to match_array(
+          ["End time must be greater than start_time", "Start time must be less than end_time"]
+        )
       end
-
-      expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to match_array(
-        ["End time must be greater than start_time", "Start time must be less than end_time"]
-      )
     end
 
     it 'validates end_time presence' do
@@ -93,12 +93,12 @@ RSpec.describe Appointment, type: :model do
       travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
         subject.start_time = Time.zone.local(2022, 1, 27, 8, 0, 0)
         subject.end_time = Time.zone.local(2022, 1, 27, 14, 0, 0)
-      end
 
-      expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to match_array(
-        ["Start time must be during business hours"]
-      )
+        expect(subject).not_to be_valid
+        expect(subject.errors.full_messages).to match_array(
+          ["Start time must be during business hours"]
+        )
+      end
     end
 
     it 'end_time should be in business hour' do
