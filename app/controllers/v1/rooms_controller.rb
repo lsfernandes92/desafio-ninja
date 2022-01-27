@@ -2,6 +2,8 @@
 
 module V1
   class RoomsController < ApplicationController
+    include ErrorSerializer
+
     before_action :set_room, only: %i[show update destroy]
 
     def show
@@ -14,7 +16,7 @@ module V1
       if @room.save
         render json: @room, status: :created, location: v1_room_url(@room)
       else
-        render json: @room.errors, status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(@room.errors), status: :unprocessable_entity
       end
     end
 
@@ -22,7 +24,7 @@ module V1
       if @room.update(room_params)
         render json: @room
       else
-        render json: @room.errors, status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(@room.errors), status: :unprocessable_entity
       end
     end
 
