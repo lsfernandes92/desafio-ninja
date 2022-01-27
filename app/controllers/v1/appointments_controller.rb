@@ -2,6 +2,8 @@
 
 module V1
   class AppointmentsController < ApplicationController
+    include ErrorSerializer
+
     before_action :set_user
 
     def show
@@ -19,7 +21,7 @@ module V1
       if @user.save
         render json: @user.appointments, status: :created, location: v1_user_appointments_path(@user)
       else
-        render json: appointment.errors, status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(appointment.errors), status: :unprocessable_entity
       end
     end
 
@@ -29,7 +31,7 @@ module V1
       if appointment.update(appointment_params)
         render json: @user.appointments
       else
-        render json: appointment.errors, status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(appointment.errors), status: :unprocessable_entity
       end
     end
 

@@ -109,7 +109,12 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['room']).to match_array(['must exist'])
+          expect(response_body).to include_json(
+            errors: [{
+              id: "room",
+              title: "must exist"
+            }]
+          )
           expect(response).to have_http_status :unprocessable_entity
         end
 
@@ -123,7 +128,12 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['title']).to match_array(["can't be blank"])
+          expect(response_body).to include_json(
+            errors: [{
+              id: "title",
+              title: "can't be blank"
+            }]
+          )
           expect(response).to have_http_status :unprocessable_entity
         end
 
@@ -137,8 +147,11 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['title']).to match_array(
-            ['is too long (maximum is 50 characters)']
+          expect(response_body).to include_json(
+            errors: [{
+              id: "title",
+              title: "is too long (maximum is 50 characters)"
+            }]
           )
           expect(response).to have_http_status :unprocessable_entity
         end
@@ -153,7 +166,12 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['notes']).to match_array(["can't be blank"])
+          expect(response_body).to include_json(
+            errors: [{
+              id: "notes",
+              title: "can't be blank"
+            }]
+          )
           expect(response).to have_http_status :unprocessable_entity
         end
 
@@ -167,8 +185,11 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['notes']).to match_array(
-            ['is too long (maximum is 140 characters)']
+          expect(response_body).to include_json(
+            errors: [{
+              id: "notes",
+              title: "is too long (maximum is 140 characters)"
+            }]
           )
           expect(response).to have_http_status :unprocessable_entity
         end
@@ -183,8 +204,11 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['start_time']).to match_array(
-            ["can't be blank", 'must be less than end_time']
+          expect(response_body).to include_json(
+            errors: [{
+              id: "start_time",
+              title: "can't be blank"
+            }]
           )
           expect(response).to have_http_status :unprocessable_entity
         end
@@ -199,8 +223,11 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['start_time']).to match_array(
-            ['must be less than end_time']
+          expect(response_body).to include_json(
+            errors: [{
+              id: "start_time",
+              title: "must be less than end_time"
+            }]
           )
           expect(response).to have_http_status :unprocessable_entity
         end
@@ -215,8 +242,11 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['end_time']).to match_array(
-            ["can't be blank", 'must be greater than start_time']
+          expect(response_body).to include_json(
+            errors: [{
+              id: "end_time",
+              title: "can't be blank"
+            }]
           )
           expect(response).to have_http_status :unprocessable_entity
         end
@@ -232,8 +262,18 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['start_time']).to match_array(['must be on week days'])
-          expect(response_body['end_time']).to match_array(['must be on week days'])
+          expect(response_body).to include_json(
+            errors: [
+              {
+                id: "start_time",
+                title: "must be on week days"
+              },
+              {
+                id: "end_time",
+                title: "must be on week days"
+              }
+            ]
+          )
           expect(response).to have_http_status :unprocessable_entity
         end
 
@@ -247,7 +287,12 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['start_time']).to match_array(['must be during business hours'])
+          expect(response_body).to include_json(
+            errors: [{
+              id: "start_time",
+              title: "must be during business hours"
+            }]
+          )
           expect(response).to have_http_status :unprocessable_entity
         end
 
@@ -261,7 +306,12 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['end_time']).to match_array(['must be during business hours'])
+          expect(response_body).to include_json(
+            errors: [{
+              id: "end_time",
+              title: "must be during business hours"
+            }]
+          )
           expect(response).to have_http_status :unprocessable_entity
         end
 
@@ -276,7 +326,12 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['appointment']).to match_array(['must be on same day'])
+          expect(response_body).to include_json(
+            errors: [{
+              id: "appointment",
+              title: "must be on same day"
+            }]
+          )
           expect(response).to have_http_status :unprocessable_entity
         end
 
@@ -293,7 +348,12 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['appointment']).to match_array(['already took'])
+          expect(response_body).to include_json(
+            errors: [{
+              id: "appointment",
+              title: "already took"
+            }]
+          )
           expect(response).to have_http_status :unprocessable_entity
         end
 
@@ -308,7 +368,12 @@ RSpec.describe 'Appointments requests', type: :request do
               headers: accept_header.merge(content_type_header)
             )
           end
-          expect(response_body['appointment']).to match_array(['must be in future date'])
+          expect(response_body).to include_json(
+            errors: [{
+              id: "appointment",
+              title: "must be in future date"
+            }]
+          )
           expect(response).to have_http_status :unprocessable_entity
         end
       end
@@ -368,11 +433,30 @@ RSpec.describe 'Appointments requests', type: :request do
         end
 
         it 'should not update the appointment' do
-          expect(response_body['title']).to match_array(["can't be blank"])
-          expect(response_body['notes']).to match_array(["can't be blank"])
-          expect(response_body['start_time']).to match_array(["can't be blank"])
-          expect(response_body['end_time']).to match_array(["can't be blank"])
-          expect(response_body['room']).to match_array(['must exist'])
+          expect(response_body).to include_json(
+            errors: [
+              {
+                id: "room",
+                title: "must exist"
+              },
+              {
+                id: "title",
+                title: "can't be blank"
+              },
+              {
+                id: "notes",
+                title: "can't be blank"
+              },
+              {
+                id: "start_time",
+                title: "can't be blank"
+              },
+              {
+                id: "end_time",
+                title: "can't be blank"
+              }
+            ]
+          )
           expect(response).to have_http_status :unprocessable_entity
         end
       end
