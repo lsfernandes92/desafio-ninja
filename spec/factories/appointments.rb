@@ -7,5 +7,6 @@ FactoryBot.define do
     start_time { Time.zone.local(2022, 12, 26, 9, 0, 0) }
     end_time { Time.zone.local(2022, 12, 26, 12, 0, 0) }
     association :user, factory: :user
+    association :room, factory: :room
   end
 end
