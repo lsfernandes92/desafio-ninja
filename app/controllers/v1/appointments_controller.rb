@@ -2,10 +2,115 @@ module V1
   class AppointmentsController < ApplicationController
     before_action :set_user
 
+    api :GET, '/users/:user_id/relationships/appointments', 'Returns all user appointments'
+    error :code => 406,
+      :desc => "Not Acceptable - Due the non accepted 'Accept' header"
+    error :code => 404,
+      :desc => "Not Found - Couldn't find User with 'id'=<USER_ID>"
+    formats ['application/vnd.api+json']
+    example <<-EOS
+      curl "http://localhost:3000/v1/users/1/relationships/appointments" \\
+        -H "Accept: application/vnd.api+json"
+
+      # The above command will returns JSON structured like this:
+      {
+          "data": [
+              {
+                  "id": "1",
+                  "type": "appointments",
+                  "attributes": {
+                      "title": "Voluptatum explicabo excepturi.",
+                      "notes": "Dolorem aperiam laboriosam odit quia.",
+                      "start-time": "27/12/2022  9:00",
+                      "end-time": "27/12/2022 18:00"
+                  },
+                  "relationships": {
+                      "user": {
+                          "data": {
+                              "id": "1",
+                              "type": "users"
+                          }
+                      }
+                  }
+              },
+              ...
+              ...
+              ...
+          ]
+      }
+    EOS
+    returns :code => 200, :desc => "a successful response" do
+       property :data, Hash, :desc => "An Array of Hashes"
+       property :id, Integer, :desc => "Numeric identifier for an Appointment"
+       property :type, String, :desc => "An string value of the record type"
+       property :attributes, Hash, :desc => "A Hash with the appointment info"
+       property :title, String, :desc => "The appointment title"
+       property :notes, String, :desc => "The appointment notes"
+       property :start_time, String, :desc => "The appointment start_time"
+       property :end_time, String, :desc => "The appointment end_time"
+    end
     def show
       render json: @user.appointments
     end
 
+    api :POST, '/users/:user_id/relationships/appointment', 'Creates a new appointment for the given user'
+    error :code => 406,
+      :desc => "Not Acceptable - Due the non accepted 'Accept' header"
+    error :code => 415,
+      :desc => "Unsupported Media Type - Due the non accepted 'Content-type' header"
+    error :code => 422,
+      :desc => "Unprocessable Entity - The request was well-formed but with fail appointment validations when tried to create"
+    error :code => 404,
+      :desc => "Not Found - Couldn't find User with 'id'=<USER_ID>"
+    formats ['application/vnd.api+json']
+    example <<-EOS
+      curl -X POST "http://localhost:3000/v1/users/1/relationships/appointment" \\
+        -H "Accept: application/vnd.api+json" \\
+        -H "Content-Type: application/vnd.api+json" \\
+        -d '{"data":{"type":"appointments","attributes":{"title":"Reunião onboarding Lucas","notes":"Passagem de conhecimento dos fluxos","start_time":"26/01/2022 10:00","end_time":"26/01/2022 11:00"}}}'
+
+      # The above command will returns JSON structured like this:
+      {
+          "data": [
+              {
+                  "id": "2",
+                  "type": "appointments",
+                  "attributes": {
+                      "title": "Reunião onboarding Lucas",
+                      "notes": "Passagem de conhecimento dos fluxos",
+                      "start-time": "26/01/2022 10:00",
+                      "end-time": "25/01/2022 11:00"
+                  },
+                  "relationships": {
+                      "user": {
+                          "data": {
+                              "id": "1",
+                              "type": "users"
+                          }
+                      }
+                  }
+              },
+              ...
+              ...
+              ...
+          ]
+      }
+    EOS
+    param :user_id, Integer, :desc => "Numeric identifier for a User who will possess the new appointment", :required => true
+    param :title, String, :desc => "The appointment title", :required => true
+    param :notes, String, :desc => "The appointment notes", :required => true
+    param :start_time, String, :desc => "The appointment start_time", :required => true
+    param :end_time, String, :desc => "The appointment end_time", :required => true
+    returns :code => 201, :desc => "a successful response" do
+      property :data, Hash, :desc => "A Hash value"
+      property :id, Integer, :desc => "Numeric identifier for an Appointment"
+      property :type, String, :desc => "An string value of the record type"
+      property :attributes, Hash, :desc => "A Hash with the user appointments infos"
+      property :title, String, :desc => "The appointment title"
+      property :notes, String, :desc => "The appointment notes"
+      property :start_time, String, :desc => "The appointment start_time"
+      property :end_time, String, :desc => "The appointment end_time"
+    end
     def create
       appointment = Appointment.new(appointment_params)
       @user.appointments << appointment
@@ -17,6 +122,69 @@ module V1
       end
     end
 
+    api :PATCH, '/users/:user_id/relationships/appointment', 'Updates an user appointment'
+    error :code => 404,
+      :desc => "Not Found - Couldn't find User with 'id'=<USER_ID>"
+    error :code => 406,
+      :desc => "Not Acceptable - Due the non accepted 'Accept' header"
+    error :code => 415,
+      :desc => "Unsupported Media Type - Due the non accepted 'Content-type' header"
+    error :code => 422,
+      :desc => "Unprocessable Entity - The request was well-formed but fail with appointment validations when tried to create"
+    formats ['application/vnd.api+json']
+    example <<-EOS
+    curl -X PATCH "http://localhost:3000/v1/users/1/relationships/appointment" \\
+      -H "Accept: application/vnd.api+json" \\
+      -H "Content-Type: application/vnd.api+json" \\
+      -d '{"data":{"id": "3","type":"appointments","attributes":{"title":"Team build","notes":"Café, gincanas e alegria","start_time":"26/01/2022 10:00","end_time":"26/01/2022 11:00"}}}'
+    ou
+    curl -X PUT "http://localhost:3000/v1/users/1/relationships/appointment" \\
+      -H "Accept: application/vnd.api+json" \\
+      -H "Content-Type: application/vnd.api+json" \\
+      -d '{"data":{"id": "3","type":"appointments","attributes":{"title":"Team build","notes":"Café, gincanas e alegria","start_time":"26/01/2022 10:00","end_time":"26/01/2022 11:00"}}}'
+
+      # The above command will returns JSON structured like this:
+      {
+          "data": [
+              {
+                  "id": "3",
+                  "type": "appointments",
+                  "attributes": {
+                      "title": "Team build",
+                      "notes": "Café, gincanas e alegria",
+                      "start-time": "26/01/2022 10:00",
+                      "end-time": "25/01/2022 11:00"
+                  },
+                  "relationships": {
+                      "user": {
+                          "data": {
+                              "id": "1",
+                              "type": "users"
+                          }
+                      }
+                  }
+              },
+              ...
+              ...
+              ...
+          ]
+      }
+    EOS
+    param :user_id, Integer, :desc => "Numeric identifier for a User who will possess the new appointment", :required => true
+    param :title, String, :desc => "The appointment title", :required => true
+    param :notes, String, :desc => "The appointment notes", :required => true
+    param :start_time, String, :desc => "The appointment start_time", :required => true
+    param :end_time, String, :desc => "The appointment end_time", :required => true
+    returns :code => 200, :desc => "a successful response" do
+      property :data, Hash, :desc => "A Hash value"
+      property :id, Integer, :desc => "Numeric identifier for an Appointment"
+      property :type, String, :desc => "An string value of the record type"
+      property :attributes, Hash, :desc => "A Hash with the user appointments infos"
+      property :title, String, :desc => "The appointment title"
+      property :notes, String, :desc => "The appointment notes"
+      property :start_time, String, :desc => "The appointment start_time"
+      property :end_time, String, :desc => "The appointment end_time"
+    end
     def update
       appointment = Appointment.find(appointment_params[:id])
 
@@ -27,6 +195,26 @@ module V1
       end
     end
 
+    api :DELETE, 'users/:user_id/relationships/appointment', 'Deletes an user appointment'
+    error :code => 404,
+      :desc => "Not Found - Couldn't find User with 'id'=<USER_ID>"
+    error :code => 406,
+      :desc => "Not Acceptable - Due the non accepted 'Accept' header"
+    error :code => 415,
+      :desc => "Unsupported Media Type - Due the non accepted 'Content-type' header"
+    formats ['application/vnd.api+json']
+    example <<-EOS
+    curl -X DELETE "http://localhost:3000/v1/users/1/relationships/appointment" \\
+      -H "Accept: application/vnd.api+json" \\
+      -H "Content-Type: application/vnd.api+json" \\
+      -d '{"data":{"id":"10"}}'
+
+      # The above command will returns JSON structured like this:
+      nothing
+    EOS
+    param :user_id, Integer, :desc => "Numeric identifier for a User who the appointment will be deleted", :required => true
+    param :appointment_id, Integer, :desc => "Numeric identifier for one Appointment", :required => true
+    returns :code => 204, :desc => "no content response"
     def destroy
       Appointment.find(appointment_params[:id]).destroy
     end
