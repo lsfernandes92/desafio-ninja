@@ -152,6 +152,15 @@ Randomized with seed 17226
   - [Curso de API da Udemy usado de referência](https://www.udemy.com/share/101C4OAkcScFlbQ3o=/)
   - [HTTP Statuses - uso como referência pra olhar os status codes](https://httpstatuses.com/)
   - [Apipie - Api documentation](https://github.com/Apipie/apipie-rails)
+  - [Rails Guides - Como formartar Date/Time](https://guides.rubyonrails.org/i18n.html#adding-date-time-formats)
+  - [Rubocop comandos básicos](https://docs.rubocop.org/rubocop/1.25/usage/basic_usage.html)
+  - [Como definar um helper method no RSpec](https://relishapp.com/rspec/rspec-core/v/3-8/docs/helper-methods/define-helper-methods-in-a-module)
+  - [Adicionar json-expectations no RSpec](https://relishapp.com/waterlink/rspec-json-expectations/docs/json-expectations/include-json-matcher-with-hash)
+  - [Como o Git lida com as mudanças de permissões de arquivos](https://medium.com/@tahteche/how-git-treats-changes-in-file-permissions-f71874ca239d)
+  - [Como dar ao usuário permissão de acesso à arquivos](https://fedingo.com/how-to-give-user-access-to-folder-in-linux/?utm_source=pocket_mylist)
+  - [Usando símbolo :if Active Record](https://guides.rubyonrails.org/active_record_validations.html#using-a-symbol-with-if-and-unless)
+  - [Helper de validação :comparison Rails 7](https://guides.rubyonrails.org/active_record_validations.html#comparison)
+  - [Como usar as classes Date & Time](https://www.rubyguides.com/2015/12/ruby-time/)
 
 ## Toubleshootings
 
