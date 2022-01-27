@@ -2,6 +2,7 @@
 
 class Appointment < ApplicationRecord
   belongs_to :user
+  belongs_to :room
 
   validates :title, presence: true, length: { maximum: 50 }
   validates :notes, presence: true, length: { maximum: 140 }

@@ -46,7 +46,7 @@ module V1
     def appointment_params
       ActiveModelSerializers::Deserialization.jsonapi_parse(
         params,
-        only: %i[id title notes start_time end_time]
+        only: %i[id title notes start_time end_time room_id]
       )
     end
   end

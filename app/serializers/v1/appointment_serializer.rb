@@ -5,6 +5,7 @@ module V1
     attributes :id, :title, :notes, :start_time, :end_time
 
     belongs_to :user
+    belongs_to :room
 
     def attributes(*args)
       h = super(*args)
