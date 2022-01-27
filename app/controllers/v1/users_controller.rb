@@ -2,6 +2,8 @@
 
 module V1
   class UsersController < ApplicationController
+    include ErrorSerializer
+
     before_action :set_user, only: %i[show update destroy]
 
     def index
@@ -22,7 +24,7 @@ module V1
       if @user.save
         render json: @user, status: :created, location: v1_user_url(@user)
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
       end
     end
 
@@ -30,7 +32,7 @@ module V1
       if @user.update(user_params)
         render json: @user
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
       end
     end
 

@@ -41,11 +41,11 @@ RSpec.describe User, type: :model do
     end
 
     it 'validates email length' do
-      subject.email = "#{'a' * 255}@gmail.com"
+      subject.email = "#{'a' * 51}@gmail.com"
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ['Email is too long (maximum is 255 characters)']
+        ['Email is too long (maximum is 50 characters)']
       )
     end
 
