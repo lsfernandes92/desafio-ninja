@@ -15,7 +15,15 @@ module V1
         -H "Accept: application/vnd.api+json"
 
       # The above command will returns JSON structured like this:
-      TODO
+      {
+          "data": {
+              "id": "1",
+              "type": "rooms",
+              "attributes": {
+                  "name": "Robin DeCraydle"
+              }
+          }
+      }
     EOS
     param :id, Integer, :desc => "Desirable room to search", :required => true
     returns :code => 200, :desc => "a successful response" do
@@ -41,10 +49,18 @@ module V1
       curl -X POST "http://localhost:3000/v1/rooms" \\
         -H "Accept: application/vnd.api+json" \\
         -H "Content-Type: application/vnd.api+json" \\
-        -d TODO
+        -d '{"data":{"attributes":{"name":"Comum"}}}'
 
       # The above command will returns JSON structured like this:
-      TODO
+      {
+          "data": {
+              "id": "6",
+              "type": "rooms",
+              "attributes": {
+                  "name": "Comum"
+              }
+          }
+      }
     EOS
     param :name, String, :desc => "The room name", :required => true
     returns :code => 201, :desc => "a successful response" do
@@ -78,15 +94,23 @@ module V1
     curl -X PATCH "http://localhost:3000/v1/rooms/1" \\
       -H "Accept: application/vnd.api+json" \\
       -H "Content-Type: application/vnd.api+json" \\
-      -d TODO
+      -d '{"data":{"attributes":{"name":"Especial"}}}'
     ou
     curl -X PUT "http://localhost:3000/v1/rooms/1" \\
       -H "Accept: application/vnd.api+json" \\
       -H "Content-Type: application/vnd.api+json" \\
-      -d TODO
+      -d '{"data":{"attributes":{"name":"Especial"}}}'
 
       # The above command will returns JSON structured like this:
-      TODO
+      {
+          "data": {
+              "id": "6",
+              "type": "rooms",
+              "attributes": {
+                  "name": "Especial"
+              }
+          }
+      }
     EOS
     param :room_id, Integer, :desc => "Desirable room to update", :required => true
     param :name, String, :desc => "The room name", :required => true
@@ -116,7 +140,7 @@ module V1
     example <<-EOS
     curl -X DELETE "http://localhost:3000/v1/rooms/1" \\
       -H "Accept: application/vnd.api+json" \\
-      -H "Content-Type: application/vnd.api+json" \\
+      -H "Content-Type: application/vnd.api+json"
 
       # The above command will returns JSON structured like this:
       nothing

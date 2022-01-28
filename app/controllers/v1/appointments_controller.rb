@@ -32,6 +32,12 @@ module V1
                               "id": "1",
                               "type": "users"
                           }
+                      },
+                      "room": {
+                          "data": {
+                              "id": "3",
+                              "type": "rooms"
+                          }
                       }
                   }
               },
@@ -50,6 +56,7 @@ module V1
        property :notes, String, :desc => "The appointment notes"
        property :start_time, String, :desc => "The appointment start_time"
        property :end_time, String, :desc => "The appointment end_time"
+       property :relationships, Hash, :desc => "Hash with the appointment relationships"
     end
     def show
       page_number = params[:page].try(:[], :number)
@@ -73,7 +80,7 @@ module V1
       curl -X POST "http://localhost:3000/v1/users/1/relationships/appointment" \\
         -H "Accept: application/vnd.api+json" \\
         -H "Content-Type: application/vnd.api+json" \\
-        -d '{"data":{"type":"appointments","attributes":{"title":"Reunião onboarding Lucas","notes":"Passagem de conhecimento dos fluxos","start_time":"26/01/2022 10:00","end_time":"26/01/2022 11:00"}}}'
+        -d '{"data":{"type":"appointments","attributes":{"title":"Reunião onboarding Lucas","notes":"Passagem de conhecimento dos fluxos","start_time":"26/12/2022 10:00","end_time":"26/12/2022 11:00","room_id":"2"}}}'
 
       # The above command will returns JSON structured like this:
       {
@@ -92,6 +99,12 @@ module V1
                           "data": {
                               "id": "1",
                               "type": "users"
+                          }
+                      },
+                      "room": {
+                          "data": {
+                              "id": "2",
+                              "type": "rooms"
                           }
                       }
                   }
@@ -116,6 +129,7 @@ module V1
       property :notes, String, :desc => "The appointment notes"
       property :start_time, String, :desc => "The appointment start_time"
       property :end_time, String, :desc => "The appointment end_time"
+      property :relationships, Hash, :desc => "Hash with the appointment relationships"
     end
     def create
       appointment = Appointment.new(appointment_params)
@@ -142,12 +156,12 @@ module V1
     curl -X PATCH "http://localhost:3000/v1/users/1/relationships/appointment" \\
       -H "Accept: application/vnd.api+json" \\
       -H "Content-Type: application/vnd.api+json" \\
-      -d '{"data":{"id": "3","type":"appointments","attributes":{"title":"Team build","notes":"Café, gincanas e alegria","start_time":"26/01/2022 10:00","end_time":"26/01/2022 11:00"}}}'
+      -d '{"data":{"id": "3","type":"appointments","attributes":{"title":"Team build","notes":"Café, gincanas e alegria","start_time":"27/12/2022 10:00","end_time":"27/12/2022 11:00","room_id":"2"}}}'
     ou
     curl -X PUT "http://localhost:3000/v1/users/1/relationships/appointment" \\
       -H "Accept: application/vnd.api+json" \\
       -H "Content-Type: application/vnd.api+json" \\
-      -d '{"data":{"id": "3","type":"appointments","attributes":{"title":"Team build","notes":"Café, gincanas e alegria","start_time":"26/01/2022 10:00","end_time":"26/01/2022 11:00"}}}'
+      -d '{"data":{"id": "3","type":"appointments","attributes":{"title":"Team build","notes":"Café, gincanas e alegria","start_time":"27/12/2022 10:00","end_time":"27/12/2022 11:00","room_id":"2"}}}'
 
       # The above command will returns JSON structured like this:
       {
@@ -166,6 +180,12 @@ module V1
                           "data": {
                               "id": "1",
                               "type": "users"
+                          }
+                      },
+                      "room": {
+                          "data": {
+                              "id": "2",
+                              "type": "rooms"
                           }
                       }
                   }
@@ -190,6 +210,7 @@ module V1
       property :notes, String, :desc => "The appointment notes"
       property :start_time, String, :desc => "The appointment start_time"
       property :end_time, String, :desc => "The appointment end_time"
+      property :relationships, Hash, :desc => "Hash with the appointment relationships"
     end
     def update
       appointment = Appointment.find(appointment_params[:id])

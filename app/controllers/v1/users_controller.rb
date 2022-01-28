@@ -21,6 +21,19 @@ module V1
                   "attributes": {
                       "name": "I. P. Freely",
                       "email": "mathilde@kerluke-buckridge.com"
+                  },
+                  "relationships": {
+                      "appointments": {
+                          "data": [
+                              {
+                                  "id": "2",
+                                  "type": "appointments"
+                              },
+                              ...
+                              ...
+                              ...
+                          ]
+                      }
                   }
               },
               ...
@@ -36,6 +49,7 @@ module V1
        property :attributes, Hash, :desc => "A Hash with the user info"
        property :name, String, :desc => "The user name"
        property :email, String, :desc => "The user email"
+       property :relationships, Hash, :desc => "Hash with the user relationships"
     end
     def index
       page_number = params[:page].try(:[], :number)
@@ -63,6 +77,19 @@ module V1
             "attributes": {
                 "name": "Chris Cross",
                 "email": "guadalupe@mcclureheel.biz"
+            },
+            "relationships": {
+                "appointments": {
+                    "data": [
+                        {
+                            "id": "2",
+                            "type": "appointments"
+                        },
+                        ...
+                        ...
+                        ...
+                    ]
+                }
             }
         }
       }
@@ -75,6 +102,7 @@ module V1
        property :attributes, Hash, :desc => "A Hash with the user infos"
        property :name, String, :desc => "The user name"
        property :email, String, :desc => "The user email"
+       property :relationships, Hash, :desc => "Hash with the user relationships"
     end
     def show
       render json: @user
@@ -101,6 +129,11 @@ module V1
               "attributes": {
                   "name": "Andrew Ryan",
                   "email": "rapturee@city.com"
+              },
+              "relationships": {
+                  "appointments": {
+                      "data": []
+                  }
               }
           }
       }
@@ -114,6 +147,7 @@ module V1
       property :attributes, Hash, :desc => "A Hash with the user infos"
       property :name, String, :desc => "The user name"
       property :email, String, :desc => "The user email"
+      property :relationships, Hash, :desc => "Hash with the user relationships"
     end
     def create
       @user = User.new(user_params)
@@ -155,6 +189,11 @@ module V1
               "attributes": {
                   "name": "Atlas Ryan",
                   "email": "radio@man.com"
+              },
+              "relationships": {
+                  "appointments": {
+                      "data": []
+                  }
               }
           }
       }
@@ -169,6 +208,7 @@ module V1
       property :attributes, Hash, :desc => "A Hash with the user infos"
       property :name, String, :desc => "The user name"
       property :email, String, :desc => "The user email"
+      property :relationships, Hash, :desc => "Hash with the user relationships"
     end
     def update
       if @user.update(user_params)
