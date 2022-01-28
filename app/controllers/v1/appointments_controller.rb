@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module V1
   class AppointmentsController < ApplicationController
     before_action :set_user
@@ -50,7 +52,11 @@ module V1
        property :end_time, String, :desc => "The appointment end_time"
     end
     def show
-      render json: @user.appointments
+      page_number = params[:page].try(:[], :number)
+      per_page = params[:page].try(:[], :size)
+      appointments = @user.appointments.all.page(page_number).per(per_page)
+
+      render json: appointments
     end
 
     api :POST, '/users/:user_id/relationships/appointment', 'Creates a new appointment for the given user'
@@ -220,6 +226,7 @@ module V1
     end
 
     private
+
     def set_user
       @user = User.find(params[:user_id])
     end
@@ -227,7 +234,7 @@ module V1
     def appointment_params
       ActiveModelSerializers::Deserialization.jsonapi_parse(
         params,
-        only: %i[id title notes start_time end_time]
+        only: %i[id title notes start_time end_time room_id]
       )
     end
   end

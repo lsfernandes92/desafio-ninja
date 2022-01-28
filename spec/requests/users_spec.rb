@@ -3,29 +3,26 @@
 require 'rails_helper'
 
 RSpec.describe 'Users requests', type: :request do
-  let(:accept_header) { { "Accept": 'application/vnd.api+json' } }
-  let(:content_type_header) { { "Content-Type": 'application/vnd.api+json' } }
+  before do
+    create_list(:user, 2)
+  end
 
   context 'when request with invalid headers' do
     it 'returns status code 406 if no accept header sent' do
-      get '/v1/users'
+      get v1_users_path
       expect(response).to have_http_status(:not_acceptable)
     end
 
     it 'returns status code 415 if no content-type header sent' do
-      post('/v1/users', headers: accept_header)
+      post(v1_users_path, headers: accept_header)
       expect(response).to have_http_status(:unsupported_media_type)
     end
   end
 
   context 'when resquest with valid headers' do
-    before do
-      create_list(:user, 2)
-    end
-
     describe 'GET /users' do
       before do
-        get('/v1/users', headers: accept_header)
+        get(v1_users_path, headers: accept_header)
       end
 
       it 'returns users info' do
@@ -76,7 +73,11 @@ RSpec.describe 'Users requests', type: :request do
 
       it 'should create user' do
         expect do
-          post('/v1/users', params: foo_user_params.to_json, headers: accept_header.merge(content_type_header))
+          post(
+            v1_users_path,
+            params: foo_user_params.to_json,
+            headers: accept_header.merge(content_type_header)
+          )
         end.to change { User.count }.by(1)
         expect(response_body).to include_json(
           data: {
@@ -96,7 +97,11 @@ RSpec.describe 'Users requests', type: :request do
           foo_user_params[:data][:attributes][:name] = ''
 
           expect do
-            post('/v1/users', params: foo_user_params.to_json, headers: accept_header.merge(content_type_header))
+            post(
+              v1_users_path,
+              params: foo_user_params.to_json,
+              headers: accept_header.merge(content_type_header)
+            )
           end.to change { User.count }.by(0)
           expect(response_body['name']).to match_array(["can't be blank"])
           expect(response).to have_http_status :unprocessable_entity
@@ -106,7 +111,11 @@ RSpec.describe 'Users requests', type: :request do
           foo_user_params[:data][:attributes][:name] = 'a' * 51
 
           expect do
-            post('/v1/users', params: foo_user_params.to_json, headers: accept_header.merge(content_type_header))
+            post(
+              v1_users_path,
+              params: foo_user_params.to_json,
+              headers: accept_header.merge(content_type_header)
+            )
           end.to change { User.count }.by(0)
           expect(response_body['name']).to match_array(
             ['is too long (maximum is 50 characters)']
@@ -118,7 +127,11 @@ RSpec.describe 'Users requests', type: :request do
           foo_user_params[:data][:attributes][:email] = ''
 
           expect do
-            post('/v1/users', params: foo_user_params.to_json, headers: accept_header.merge(content_type_header))
+            post(
+              v1_users_path,
+              params: foo_user_params.to_json,
+              headers: accept_header.merge(content_type_header)
+            )
           end.to change { User.count }.by(0)
           expect(response_body['email']).to match_array(
             ["can't be blank", 'is invalid']
@@ -130,7 +143,11 @@ RSpec.describe 'Users requests', type: :request do
           foo_user_params[:data][:attributes][:email] = "#{'a' * 244}@example.com.br"
 
           expect do
-            post('/v1/users', params: foo_user_params.to_json, headers: accept_header.merge(content_type_header))
+            post(
+              v1_users_path,
+              params: foo_user_params.to_json,
+              headers: accept_header.merge(content_type_header)
+            )
           end.to change { User.count }.by(0)
           expect(response_body['email']).to match_array(
             ['is too long (maximum is 255 characters)']
@@ -142,7 +159,11 @@ RSpec.describe 'Users requests', type: :request do
           foo_user_params[:data][:attributes][:email] = 'umemailnaovalido'
 
           expect do
-            post('/v1/users', params: foo_user_params.to_json, headers: accept_header.merge(content_type_header))
+            post(
+              v1_users_path,
+              params: foo_user_params.to_json,
+              headers: accept_header.merge(content_type_header)
+            )
           end.to change { User.count }.by(0)
           expect(response_body['email']).to match_array(['is invalid'])
           expect(response).to have_http_status :unprocessable_entity
@@ -153,7 +174,11 @@ RSpec.describe 'Users requests', type: :request do
           foo_user_params[:data][:attributes][:email] = duplicate_user.email
 
           expect do
-            post('/v1/users', params: foo_user_params.to_json, headers: accept_header.merge(content_type_header))
+            post(
+              v1_users_path,
+              params: foo_user_params.to_json,
+              headers: accept_header.merge(content_type_header)
+            )
           end.to change { User.count }.by(0)
           expect(response_body['email']).to match_array(['has already been taken'])
           expect(response).to have_http_status :unprocessable_entity
@@ -164,7 +189,11 @@ RSpec.describe 'Users requests', type: :request do
           foo_user_params[:data][:attributes][:email] = mixed_case_email
 
           expect do
-            post('/v1/users', params: foo_user_params.to_json, headers: accept_header.merge(content_type_header))
+            post(
+              v1_users_path,
+              params: foo_user_params.to_json,
+              headers: accept_header.merge(content_type_header)
+            )
           end.to change { User.count }.by(1)
           expect(response_body['data']['attributes']['email']).to eq mixed_case_email.downcase
           expect(response).to have_http_status :created

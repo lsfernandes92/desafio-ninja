@@ -75,6 +75,7 @@ GEM
     api-pagination (5.0.0)
     apipie-rails (0.5.19)
       rails (>= 4.1)
+    api-pagination (5.0.0)
     ast (2.4.2)
     bootsnap (1.10.2)
       msgpack (~> 1.2)

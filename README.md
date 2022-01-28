@@ -160,6 +160,7 @@ Randomized with seed 17226
   - [Como dar ao usuário permissão de acesso à arquivos](https://fedingo.com/how-to-give-user-access-to-folder-in-linux/?utm_source=pocket_mylist)
   - [Usando símbolo :if Active Record](https://guides.rubyonrails.org/active_record_validations.html#using-a-symbol-with-if-and-unless)
   - [Helper de validação :comparison Rails 7](https://guides.rubyonrails.org/active_record_validations.html#comparison)
+  - [Como usar as classes Date & Time](https://www.rubyguides.com/2015/12/ruby-time/)
 
 ## Toubleshootings
 

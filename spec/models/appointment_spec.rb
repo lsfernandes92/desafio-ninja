@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Appointment, type: :model do
@@ -11,6 +13,14 @@ RSpec.describe Appointment, type: :model do
   end
 
   context 'with validations' do
+    it 'validates room presence' do
+      subject.room_id = ''
+
+      expect(subject).not_to be_valid
+      expect(subject.errors.full_messages).to match_array(
+        ['Room must exist']
+      )
+    end
     it 'validates title presence' do
       subject.title = ''
 
@@ -52,7 +62,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["Start time can't be blank", "Start time must be less than end_time"]
+        ["Start time can't be blank", 'Start time must be less than end_time']
       )
     end
 
@@ -60,12 +70,12 @@ RSpec.describe Appointment, type: :model do
       travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
         subject.start_time = Time.zone.local(2022, 1, 27, 13, 0, 0)
         subject.end_time = Time.zone.local(2022, 1, 27, 12, 0, 0)
-      end
 
-      expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to match_array(
-        ["End time must be greater than start_time", "Start time must be less than end_time"]
-      )
+        expect(subject).not_to be_valid
+        expect(subject.errors.full_messages).to match_array(
+          ['End time must be greater than start_time', 'Start time must be less than end_time']
+        )
+      end
     end
 
     it 'validates end_time presence' do
@@ -73,7 +83,7 @@ RSpec.describe Appointment, type: :model do
 
       expect(subject).not_to be_valid
       expect(subject.errors.full_messages).to match_array(
-        ["End time can't be blank", "End time must be greater than start_time"]
+        ["End time can't be blank", 'End time must be greater than start_time']
       )
     end
 
@@ -81,73 +91,74 @@ RSpec.describe Appointment, type: :model do
       travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
         subject.start_time = Time.zone.local(2022, 1, 29, 13, 0, 0)
         subject.end_time = Time.zone.local(2022, 1, 29, 14, 0, 0)
-      end
 
-      expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to match_array(
-        ["End time must be on week days", "Start time must be on week days"]
-      )
+        expect(subject).not_to be_valid
+        expect(subject.errors.full_messages).to match_array(
+          ['End time must be on week days', 'Start time must be on week days']
+        )
+      end
     end
 
     it 'start_time should be in business hour' do
       travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
         subject.start_time = Time.zone.local(2022, 1, 27, 8, 0, 0)
         subject.end_time = Time.zone.local(2022, 1, 27, 14, 0, 0)
-      end
 
-      expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to match_array(
-        ["Start time must be during business hours"]
-      )
+        expect(subject).not_to be_valid
+        expect(subject.errors.full_messages).to match_array(
+          ['Start time must be during business hours']
+        )
+      end
     end
 
     it 'end_time should be in business hour' do
       travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
         subject.start_time = Time.zone.local(2022, 1, 27, 17, 0, 0)
         subject.end_time = Time.zone.local(2022, 1, 27, 18, 1, 0)
-      end
 
-      expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to match_array(
-        ["End time must be during business hours"]
-      )
+        expect(subject).not_to be_valid
+        expect(subject.errors.full_messages).to match_array(
+          ['End time must be during business hours']
+        )
+      end
     end
 
     it 'start_time and end_time should be on same day' do
       travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
         subject.start_time = Time.zone.local(2022, 1, 27, 17, 0, 0)
         subject.end_time = Time.zone.local(2022, 1, 28, 17, 1, 0)
-      end
 
-      expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to match_array(
-        ["Appointment must be on same day"]
-      )
+        expect(subject).not_to be_valid
+        expect(subject.errors.full_messages).to match_array(
+          ['Appointment must be on same day']
+        )
+      end
     end
 
     it 'validates if appointment time already took' do
       travel_to Time.zone.local(2022, 1, 26, 8, 0, 0) do
-        create(:appointment)
+        appointment = create(:appointment)
         subject.start_time = Time.zone.local(2022, 12, 26, 9, 0, 0)
         subject.end_time = Time.zone.local(2022, 12, 26, 17, 0, 0)
-      end
+        subject.room = appointment.room
 
-      expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to match_array(
-        ["Appointment already took"]
-      )
+        expect(subject).not_to be_valid
+        expect(subject.errors.full_messages).to match_array(
+          ['Appointment already took']
+        )
+      end
     end
 
     it 'appointment should be on future date and time' do
       travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
         subject.start_time = Time.zone.local(2022, 1, 25, 17, 0, 0)
         subject.end_time = Time.zone.local(2022, 1, 25, 17, 1, 0)
-      end
 
-      expect(subject).not_to be_valid
-      expect(subject.errors.full_messages).to match_array(
-        ["Appointment must be in future date"]
-      )
+        expect(subject).not_to be_valid
+        expect(subject.errors.full_messages).to match_array(
+          ['Appointment must be in future date']
+        )
+      end
     end
   end
 end
