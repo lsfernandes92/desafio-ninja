@@ -58,6 +58,60 @@ module V1
        property :end_time, String, :desc => "The appointment end_time"
        property :relationships, Hash, :desc => "Hash with the appointment relationships"
     end
+    api :GET, '/rooms/:room_id/relationships/appointments', 'Returns all room appointments'
+    error :code => 406,
+      :desc => "Not Acceptable - Due the non accepted 'Accept' header"
+    error :code => 404,
+      :desc => "Not Found - Couldn't find Room with 'id'=<ROOM_ID>"
+    formats ['application/vnd.api+json']
+    example <<-EOS
+      curl "http://localhost:3000/v1/rooms/1/relationships/appointments" \\
+        -H "Accept: application/vnd.api+json"
+
+      # The above command will returns JSON structured like this:
+      {
+          "data": [
+              {
+                  "id": "1",
+                  "type": "appointments",
+                  "attributes": {
+                      "title": "Voluptatum explicabo excepturi.",
+                      "notes": "Dolorem aperiam laboriosam odit quia.",
+                      "start-time": "27/12/2022  9:00",
+                      "end-time": "27/12/2022 18:00"
+                  },
+                  "relationships": {
+                      "user": {
+                          "data": {
+                              "id": "1",
+                              "type": "users"
+                          }
+                      },
+                      "room": {
+                          "data": {
+                              "id": "1",
+                              "type": "rooms"
+                          }
+                      }
+                  }
+              },
+              ...
+              ...
+              ...
+          ]
+      }
+    EOS
+    returns :code => 200, :desc => "a successful response" do
+       property :data, Hash, :desc => "An Array of Hashes"
+       property :id, Integer, :desc => "Numeric identifier for an Appointment"
+       property :type, String, :desc => "An string value of the record type"
+       property :attributes, Hash, :desc => "A Hash with the appointment info"
+       property :title, String, :desc => "The appointment title"
+       property :notes, String, :desc => "The appointment notes"
+       property :start_time, String, :desc => "The appointment start_time"
+       property :end_time, String, :desc => "The appointment end_time"
+       property :relationships, Hash, :desc => "Hash with the appointment relationships"
+    end
     def show
       page_number = params[:page].try(:[], :number)
       per_page = params[:page].try(:[], :size)
