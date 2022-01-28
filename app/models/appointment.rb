@@ -27,6 +27,8 @@ class Appointment < ApplicationRecord
     AppointmentValidator.new(appointment).validate
   end
 
+  alias_attribute :location, :room
+
   before_create { set_durations_minute }
 
   paginates_per 5
