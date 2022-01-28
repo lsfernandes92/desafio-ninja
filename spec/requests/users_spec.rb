@@ -325,5 +325,37 @@ RSpec.describe 'Users requests', type: :request do
         )
       end
     end
+
+    describe 'GET /users/:id/relationships/appointments' do
+      let(:user) { create(:user_with_appointment) }
+
+      it 'returns user appointments' do
+        get(v1_user_appointments_path(user), headers: accept_header)
+        expect(response_body).to include_json(
+          data: [{
+            id: (be_kind_of String),
+            type: 'appointments',
+            attributes: {
+              title: (be_kind_of String),
+              notes: (be_kind_of String),
+              'start-time': (be_kind_of String),
+              'end-time': (be_kind_of String)
+            }
+          }]
+        )
+      end
+
+      it 'returns 404 when user do not exist' do
+        get(v1_user_appointments_path('999'), headers: accept_header)
+
+        expect(response.status).to eq 404
+        expect(response_body).to include_json(
+          errors: [{
+            id: 'record',
+            title: "Couldn't find User with 'id'=999"
+          }]
+        )
+      end
+    end
   end
 end

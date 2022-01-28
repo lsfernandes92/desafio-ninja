@@ -175,7 +175,7 @@ RSpec.describe 'Room requests', type: :request do
       end
     end
 
-    describe 'DELETE /users/:user_id' do
+    describe 'DELETE /rooms/:room_id' do
       let(:room_to_destroy) { create(:room) }
 
       before { room_to_destroy }
@@ -198,6 +198,38 @@ RSpec.describe 'Room requests', type: :request do
           )
         end.to change { Room.count }.by(0)
         expect(response).to have_http_status :not_found
+        expect(response_body).to include_json(
+          errors: [{
+            id: 'record',
+            title: "Couldn't find Room with 'id'=999"
+          }]
+        )
+      end
+    end
+
+    describe 'GET /rooms/:id/relationships/appointments' do
+      let(:room) { create(:room_with_appointment) }
+
+      it 'returns room appointments' do
+        get(v1_room_appointments_path(room), headers: accept_header)
+        expect(response_body).to include_json(
+          data: [{
+            id: (be_kind_of String),
+            type: 'appointments',
+            attributes: {
+              title: (be_kind_of String),
+              notes: (be_kind_of String),
+              'start-time': (be_kind_of String),
+              'end-time': (be_kind_of String)
+            }
+          }]
+        )
+      end
+
+      it 'returns 404 when room do not exist' do
+        get(v1_room_appointments_path('999'), headers: accept_header)
+
+        expect(response.status).to eq 404
         expect(response_body).to include_json(
           errors: [{
             id: 'record',
