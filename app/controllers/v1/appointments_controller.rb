@@ -28,7 +28,7 @@ module V1
     def update
       appointment = Appointment.find(appointment_params[:id])
 
-      if appointment.update(appointment_params)
+      if appointment.update(appointment_params.merge(user_id: params[:user_id]))
         render json: @user.appointments
       else
         render json: ErrorSerializer.serialize(appointment.errors), status: :unprocessable_entity

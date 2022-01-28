@@ -6,11 +6,12 @@ class AppointmentValidator
   end
 
   def validate
+    same_user_owner
+    already_took
+    duration_in_future
     duration_time_on_weekday
     duration_time_in_business_hour
     duration_time_same_day
-    already_took
-    duration_in_future
   end
 
   private
@@ -93,5 +94,14 @@ class AppointmentValidator
     if @appointment.start_time < Time.zone.now || @appointment.end_time < Time.zone.now
       @appointment.errors.add(:appointment, 'must be in future date')
     end
+  end
+
+  def same_user_owner
+    return if @appointment.id.nil?
+    @appointment.errors.add(:appointment, "don't belong to user") unless @appointment.user == appointment_user
+  end
+
+  def appointment_user
+    Appointment.find_by(id: @appointment.id)&.user
   end
 end
