@@ -113,8 +113,8 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "room",
-              title: "must exist"
+              id: 'room',
+              title: 'must exist'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -132,7 +132,7 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "title",
+              id: 'title',
               title: "can't be blank"
             }]
           )
@@ -151,8 +151,8 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "title",
-              title: "is too long (maximum is 50 characters)"
+              id: 'title',
+              title: 'is too long (maximum is 50 characters)'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -170,7 +170,7 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "notes",
+              id: 'notes',
               title: "can't be blank"
             }]
           )
@@ -189,8 +189,8 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "notes",
-              title: "is too long (maximum is 140 characters)"
+              id: 'notes',
+              title: 'is too long (maximum is 140 characters)'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -208,7 +208,7 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "start_time",
+              id: 'start_time',
               title: "can't be blank"
             }]
           )
@@ -227,8 +227,8 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "start_time",
-              title: "must be less than end_time"
+              id: 'start_time',
+              title: 'must be less than end_time'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -246,7 +246,7 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "end_time",
+              id: 'end_time',
               title: "can't be blank"
             }]
           )
@@ -267,12 +267,12 @@ RSpec.describe 'Appointments requests', type: :request do
           expect(response_body).to include_json(
             errors: [
               {
-                id: "start_time",
-                title: "must be on week days"
+                id: 'start_time',
+                title: 'must be on week days'
               },
               {
-                id: "end_time",
-                title: "must be on week days"
+                id: 'end_time',
+                title: 'must be on week days'
               }
             ]
           )
@@ -291,8 +291,8 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "start_time",
-              title: "must be during business hours"
+              id: 'start_time',
+              title: 'must be during business hours'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -310,8 +310,8 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "end_time",
-              title: "must be during business hours"
+              id: 'end_time',
+              title: 'must be during business hours'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -330,8 +330,8 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "appointment",
-              title: "must be on same day"
+              id: 'appointment',
+              title: 'must be on same day'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -352,8 +352,8 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "appointment",
-              title: "already took"
+              id: 'appointment',
+              title: 'already took'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -372,8 +372,8 @@ RSpec.describe 'Appointments requests', type: :request do
           end
           expect(response_body).to include_json(
             errors: [{
-              id: "appointment",
-              title: "must be in future date"
+              id: 'appointment',
+              title: 'must be in future date'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -438,23 +438,23 @@ RSpec.describe 'Appointments requests', type: :request do
           expect(response_body).to include_json(
             errors: [
               {
-                id: "room",
-                title: "must exist"
+                id: 'room',
+                title: 'must exist'
               },
               {
-                id: "title",
+                id: 'title',
                 title: "can't be blank"
               },
               {
-                id: "notes",
+                id: 'notes',
                 title: "can't be blank"
               },
               {
-                id: "start_time",
+                id: 'start_time',
                 title: "can't be blank"
               },
               {
-                id: "end_time",
+                id: 'end_time',
                 title: "can't be blank"
               }
             ]

@@ -107,7 +107,7 @@ RSpec.describe 'Users requests', type: :request do
           end.to change { User.count }.by(0)
           expect(response_body).to include_json(
             errors: [{
-              id: "name",
+              id: 'name',
               title: "can't be blank"
             }]
           )
@@ -126,8 +126,8 @@ RSpec.describe 'Users requests', type: :request do
           end.to change { User.count }.by(0)
           expect(response_body).to include_json(
             errors: [{
-              id: "name",
-              title: "is too long (maximum is 50 characters)"
+              id: 'name',
+              title: 'is too long (maximum is 50 characters)'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -146,12 +146,12 @@ RSpec.describe 'Users requests', type: :request do
           expect(response_body).to include_json(
             errors: [
               {
-                id: "email",
+                id: 'email',
                 title: "can't be blank"
               },
               {
-                id: "email",
-                title: "is invalid"
+                id: 'email',
+                title: 'is invalid'
               }
             ]
           )
@@ -170,8 +170,8 @@ RSpec.describe 'Users requests', type: :request do
           end.to change { User.count }.by(0)
           expect(response_body).to include_json(
             errors: [{
-              id: "email",
-              title: "is too long (maximum is 50 characters)"
+              id: 'email',
+              title: 'is too long (maximum is 50 characters)'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -189,8 +189,8 @@ RSpec.describe 'Users requests', type: :request do
           end.to change { User.count }.by(0)
           expect(response_body).to include_json(
             errors: [{
-              id: "email",
-              title: "is invalid"
+              id: 'email',
+              title: 'is invalid'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -209,8 +209,8 @@ RSpec.describe 'Users requests', type: :request do
           end.to change { User.count }.by(0)
           expect(response_body).to include_json(
             errors: [{
-              id: "email",
-              title: "has already been taken"
+              id: 'email',
+              title: 'has already been taken'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -282,16 +282,16 @@ RSpec.describe 'Users requests', type: :request do
           expect(response_body).to include_json(
             errors: [
               {
-                id: "name",
+                id: 'name',
                 title: "can't be blank"
               },
               {
-                id: "email",
+                id: 'email',
                 title: "can't be blank"
               },
               {
-                id: "email",
-                title: "is invalid"
+                id: 'email',
+                title: 'is invalid'
               }
             ]
           )

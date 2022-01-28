@@ -93,7 +93,7 @@ RSpec.describe 'Room requests', type: :request do
           end.to change { Room.count }.by(0)
           expect(response_body).to include_json(
             errors: [{
-              id: "name",
+              id: 'name',
               title: "can't be blank"
             }]
           )
@@ -112,8 +112,8 @@ RSpec.describe 'Room requests', type: :request do
           end.to change { Room.count }.by(0)
           expect(response_body).to include_json(
             errors: [{
-              id: "name",
-              title: "is too long (maximum is 50 characters)"
+              id: 'name',
+              title: 'is too long (maximum is 50 characters)'
             }]
           )
           expect(response).to have_http_status :unprocessable_entity
@@ -166,7 +166,7 @@ RSpec.describe 'Room requests', type: :request do
         it 'should not update the room' do
           expect(response_body).to include_json(
             errors: [{
-              id: "name",
+              id: 'name',
               title: "can't be blank"
             }]
           )
