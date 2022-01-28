@@ -53,8 +53,10 @@ RSpec.describe 'Users requests', type: :request do
 
         expect(response.status).to eq 404
         expect(response_body).to include_json(
-          error_message: "Couldn't find User with 'id'=999",
-          error_status: '404'
+          errors: [{
+            id: 'record',
+            title: "Couldn't find User with 'id'=999"
+          }]
         )
       end
     end
@@ -316,8 +318,10 @@ RSpec.describe 'Users requests', type: :request do
         end.to change { User.count }.by(0)
         expect(response).to have_http_status :not_found
         expect(response_body).to include_json(
-          error_message: "Couldn't find User with 'id'=999",
-          error_status: '404'
+          errors: [{
+            id: 'record',
+            title: "Couldn't find User with 'id'=999"
+          }]
         )
       end
     end

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
   before_action :ensure_server_responsability
 
   def render_not_found_response(exception)
-    render json: { error_message: exception.message, error_status: '404' }, status: :not_found
+    render json: { errors: [{ id: 'record', title: exception.message }] }, status: :not_found
   end
 
   def ensure_client_responsability
