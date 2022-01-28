@@ -21,6 +21,19 @@ module V1
               "type": "rooms",
               "attributes": {
                   "name": "Robin DeCraydle"
+              },
+              "relationships": {
+                  "appointments": {
+                      "data": [
+                          {
+                              "id": "4",
+                              "type": "appointments"
+                          },
+                          ...
+                          ...
+                          ...
+                      ]
+                  }
               }
           }
       }
@@ -32,6 +45,7 @@ module V1
        property :type, String, :desc => "An string value of the record type"
        property :attributes, Hash, :desc => "A Hash with the room info"
        property :name, String, :desc => "The room name"
+       property :relationships, Hash, :desc => "Hash with the room relationships"
     end
     def show
       render json: @room
@@ -58,6 +72,11 @@ module V1
               "type": "rooms",
               "attributes": {
                   "name": "Comum"
+              },
+              "relationships": {
+                  "appointments": {
+                      "data": []
+                  }
               }
           }
       }
@@ -69,6 +88,7 @@ module V1
       property :type, String, :desc => "An string value of the record type"
       property :attributes, Hash, :desc => "A Hash with the room info"
       property :name, String, :desc => "The room name"
+      property :relationships, Hash, :desc => "Hash with the room relationships"
     end
     def create
       @room = Room.new(room_params)
@@ -108,6 +128,19 @@ module V1
               "type": "rooms",
               "attributes": {
                   "name": "Especial"
+              },
+              "relationships": {
+                  "appointments": {
+                      "data": [
+                          {
+                              "id": "4",
+                              "type": "appointments"
+                          },
+                          ...
+                          ...
+                          ...
+                      ]
+                  }
               }
           }
       }
@@ -120,6 +153,7 @@ module V1
       property :type, String, :desc => "An string value of the record type"
       property :attributes, Hash, :desc => "A Hash with the room info"
       property :name, String, :desc => "The room name"
+      property :relationships, Hash, :desc => "Hash with the room relationships"
     end
     def update
       if @room.update(room_params)
