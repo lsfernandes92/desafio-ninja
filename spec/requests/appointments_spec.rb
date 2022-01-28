@@ -462,6 +462,31 @@ RSpec.describe 'Appointments requests', type: :request do
           expect(response).to have_http_status :unprocessable_entity
         end
       end
+
+      context 'when appointment don\'t belong to user' do
+        let(:user_not_owner) { create(:user) }
+
+        before do
+          travel_to Time.zone.local(2022, 1, 26, 9, 0, 0) do
+            patch(
+              v1_user_appointment_path(user_not_owner),
+              params: appointment_params.to_json,
+              headers: accept_header.merge(content_type_header)
+            )
+          end
+          record_to_update.reload
+        end
+
+        it 'should not updates the appointment' do
+          expect(response_body).to include_json(
+            errors: [{
+              id: 'appointment',
+              title: "don't belong to user"
+            }]
+          )
+          expect(response).to have_http_status :unprocessable_entity
+        end
+      end
     end
 
     describe 'DELETE /users/:user_id/relationships/appointment' do
