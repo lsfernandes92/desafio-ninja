@@ -38,7 +38,7 @@ No que diz respeito a criação, alteração, e exclusão dos compromissos deve-
 
 Ao tentar criar um agendamento existe algumas validações que irei citar aqui de antemão. Algumas delas(se não esqueci de nenhuma :sweat_smile:) são:
 
-* Um agendamento só poderá ser alterado responsável por sua criação
+* Um agendamento só poderá ser alterado pelo responsável por sua criação
 * Um agendamento deverá ter como data inicial e final a mesma, porém horários e salas diferentes
 * A criação de um agendamento só será permitida se a data for igual ou maior que a atual
 * Como pedido, um agendamento só poderá ser criado em dias da semana
@@ -98,7 +98,7 @@ link(:self) { v1_user_url(object) }
 
   A especificação diz que as responsabilidades do cliente são:
     * Ignorar qualquer "response" que não venha com o "header" `Content-Type: application/vnd.api+json`
-    * Quando uma requisição for enviar qualquer tipo de informação no corpo da mesma, ela enviada com o "header" `Content-Type: application/vnd.api+json`
+    * Quando uma requisição for enviar qualquer tipo de informação no corpo da mesma, ela deverá ser enviada com o "header" `Content-Type: application/vnd.api+json`
     * Para qualquer requisição o cliente deve informar o "header" `Accept: application/vnd.api+json`
 
   A especificação fala também que aa responsabilidades do servidor são:
@@ -113,7 +113,7 @@ link(:self) { v1_user_url(object) }
   * **next**: the next page of data
 
 
-* **Erros amigáveis**: Quando o servidor encontra um erro ele pode optar por devolver o erro(s) de forma mais inteligível para o usuário. Se ele optar por enviar esse objeto de erro como resposta, esse objeto deverá ter o nó "errors" como mais externo e dentro dele uma array de objetos que poderá ter alguns nós como membros, por exemplo, `id`, `links`, `status`, `code`, `title`, `detail`, `source` e  `meta`.
+* **Erros amigáveis**: Quando o servidor encontra um erro ele pode optar por devolver o(s) erro(s) de forma mais inteligível para o usuário. Se ele optar por enviar esse objeto de erro como resposta, esse objeto deverá ter o nó "errors" como mais externo e dentro dele uma array de objetos que poderá ter alguns nós como membros, por exemplo, `id`, `links`, `status`, `code`, `title`, `detail`, `source` e  `meta`.
 
   Isso pode ser visto ao tentar fazer um `POST /v1/users/1/relationships/appointment` não enviando os dados do agendamento
 ```
